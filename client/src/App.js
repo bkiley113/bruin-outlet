@@ -1,20 +1,44 @@
 import {
   createBrowserRouter,
   RouterProvider,
+  Outlet,
 } from "react-router-dom";
-import Login from "./pages/Login"
-import MakeAccount from "./pages/MakeAccount"
-import HomePage from "./pages/HomePage"
-import Cart from "./pages/Cart"
+import Login from "./pages/Login";
+import MakeAccount from "./pages/MakeAccount";
+import HomePage from "./pages/HomePage";
+import Cart from "./pages/Cart";
+import Item from "./pages/Item";
+import HeaderBar from "./components/HeaderBar";
+import PageFooter from "./components/PageFooter";
+
+const PageFormat = () => {
+  return(
+    <>
+    <HeaderBar/>
+    <Outlet/>
+    <PageFooter/>
+    </>
+  );
+};
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <HomePage />,
-  },
-  {
-    path: "/cart",
-    element: <Cart />,
+    element: <PageFormat/>,
+    children:[
+      {
+        path: "/",
+        element:<HomePage/>
+      },
+      {
+        path: "/item/:id",
+        element:<Item/>
+      },
+      {
+        path: "/cart",
+        element:<Cart/>
+      },
+    ]
   },
   {
     path: "/login",
@@ -28,10 +52,14 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <div>
-      <RouterProvider router={router}/>
+    <div className="app">
+        <div className="container">
+          <RouterProvider router={router}/>
+        </div>
     </div>
   );
 }
+
+
 
 export default App;
