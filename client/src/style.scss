@@ -1,0 +1,42 @@
+.app{
+    .category{
+        .authenticate{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 90vh;
+            background-color: #41c2e6;
+        }
+
+        h1{
+            font-size: 20px;
+            color: teal;
+            margin-bottom: 20px;
+
+        }
+
+        form{
+            display: flex;
+            flex-direction: column;
+            padding: 50px;
+            background-color: white;
+            width: 200px;
+            gap: 20px;
+
+            input{
+                padding: 5px;
+                border: none;
+                border-bottom: 1px solid gray ;
+            }
+        }
+
+        button{
+            padding: 10px;
+            border: none;
+            background-color: teal;
+            cursor: pointer;
+            color: white;
+        }
+    }
+}

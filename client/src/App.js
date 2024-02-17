@@ -10,6 +10,7 @@ import Cart from "./pages/Cart";
 import Item from "./pages/Item";
 import HeaderBar from "./components/HeaderBar";
 import PageFooter from "./components/PageFooter";
+import "./style.scss"
 
 const PageFormat = () => {
   return(
@@ -53,7 +54,7 @@ const router = createBrowserRouter([
 function App() {
   return (
     <div className="app">
-        <div className="container">
+        <div className="category">
           <RouterProvider router={router}/>
         </div>
     </div>
