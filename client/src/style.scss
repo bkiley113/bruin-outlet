@@ -1,5 +1,9 @@
 .app{
-    .category{
+    display: flex;
+    justify-content: center;
+    .container{
+        width: 1024px;
+        //login and register stuff
         .authenticate{
             display: flex;
             flex-direction: column;
@@ -48,6 +52,22 @@
                 span{
                     font-size: 12px;
                     text-align: center;
+                }
+            }
+        }
+
+        //header stuff
+
+        .headerbar {
+            .container {
+                padding: 10px 0px;
+                display: flex;
+                justify-content: space-between;
+                logo{
+
+                }
+                links{
+
                 }
             }
         }

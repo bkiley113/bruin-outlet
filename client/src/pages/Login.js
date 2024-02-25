@@ -8,7 +8,7 @@ const Login = () => {
             <form>
                 <input type ="text" placeholder='username'/>
                 <input type ="password" placeholder='password'/>
-                <p class="pass-reqs">Password must be at least 8 characters long</p>
+                <p class="err-mess">Invalid username or password.</p>
                 <button>Login</button>
                 <span>Don't have an account yet?<br /><br /> <Link to="/makeaccount">Make one here.</Link>
                 </span>
