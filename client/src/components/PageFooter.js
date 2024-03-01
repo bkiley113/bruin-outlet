@@ -8,6 +8,12 @@ const PageFooter = () => {
             <span>
                 Footer information here!!!
             </span>
+            <span>
+                Footer information here!!!
+            </span>
+            <span>
+                Footer information here!!!
+            </span>
         </footer>
     )
 }

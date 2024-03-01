@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom'
 const HeaderBar = () => {
     return (
         <div className='headerbar'>
-            <div className="container">
+            <div className='container'>
                 <div className="logo">
                     <img src={Logo} alt="" />
                 </div>
@@ -28,7 +28,9 @@ const HeaderBar = () => {
                     <span>Account name </span>
                     <span>Logout </span>
                     <span className="cart">
-                        <Link className="link" to="/cart"></Link>
+                        <Link className="link" to="/cart">
+                            <h5></h5>
+                        </Link>
                     </span>
                 </div>
             </div>

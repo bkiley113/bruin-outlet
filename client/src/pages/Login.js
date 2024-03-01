@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 const Login = () => {
     return (
         <div className = 'authenticate'>
+            <h2></h2>
             <h1>Login</h1>
             <form>
                 <input type ="text" placeholder='username'/>
