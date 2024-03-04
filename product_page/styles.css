@@ -1,3 +1,4 @@
+
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
@@ -6,7 +7,7 @@ body {
 }
 .container {
     max-width: 1600px;
-    margin: 120px auto;
+    margin: 50px auto;
     background: #ffffff;
     padding: 40px;
     border-radius: 5px;
@@ -31,6 +32,11 @@ img{
     display: table-cell;
 }
 
+.img_butt{
+    width:10%;
+    height:10%;
+}
+
 h1 {
     text-align: center;
 }
@@ -44,7 +50,7 @@ h1 {
     width: 50%;
 }
 
-button {
+.button {
     padding: 10px;
     background-color: #007bff;
     color: #fff;
@@ -53,6 +59,20 @@ button {
     cursor: pointer;
     margin: 0;
 }
+.back_butt{
+    background-color: #007bff;
+    border: none;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
 
 .hidden {
     display: none;
@@ -89,4 +109,10 @@ button {
 
 }
 
+.top{
+    display:flex;
+    gap:30px;
+
+    padding-left:20px;
+}
 
