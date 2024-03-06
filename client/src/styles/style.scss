@@ -391,5 +391,25 @@
 
             }
         }
+
+        //CART
+        .cart{
+            .content{
+                display: flex;
+                flex: 5;
+                flex-direction: column;
+                gap: 20px;
+
+            }
+            .sidebar{
+                display: flex;
+                flex:2;
+                flex-direction: column;
+                gap: 25px;
+
+
+            }
+
+        }
     }
 }

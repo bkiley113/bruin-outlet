@@ -1,13 +1,17 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 import Sidebar from '../components/Sidebar'
+import { useParams } from 'react-router-dom'
 
 
-const Item = () => {
+const Item = ({itemsarr}) => {
+    const {sku} = useParams();
     return (
         <div className='itempage'>
+            <p>{sku}</p>
             <div className='content'>
             <div className='mainimgcontainer'>
+
                 <img src="https://cdn.shoplightspeed.com/shops/616371/files/53697154/800x800x3/russell-athletic-ucla-joe-bear-bruins-pullover-hoo.jpg" alt=''/>
             </div>
             <div className='info'>

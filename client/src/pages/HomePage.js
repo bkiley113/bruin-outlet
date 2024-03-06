@@ -12,8 +12,8 @@ import 'react-slideshow-image/dist/styles.css'
 //DUMMY DATA IGNORE THIS
   const items = [
     {
-      id: 1,
-      title: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
+      id: 1, //this will be the SKU# (i.e. GHB6008J or something like that)
+      title: "UCLA MENS HOODIE",
       desc: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. A possimus excepturi aliquid nihil cumque ipsam facere aperiam at! Ea dolorem ratione sit debitis deserunt repellendus numquam ab vel perspiciatis corporis!",
       img: "https://cdn.shoplightspeed.com/shops/616371/files/53697154/800x800x3/russell-athletic-ucla-joe-bear-bruins-pullover-hoo.jpg",
       cat: "Men",
@@ -71,7 +71,7 @@ const slideImages = [
   },
 ];
 
-const Homepage = () => {
+const Homepage = ({itemsarr}) => {
   const yourRunFunction = (userInput) => {
     // Do something with the user input, for example, log it to the console
     console.log('Search triggered with input:', userInput);
@@ -91,7 +91,7 @@ const Homepage = () => {
       </Slide>
       <div className='main'>
         <div className='items'>
-          {items.map(item=>(
+          {itemsarr.map(item=>(
             <div className='item' key={item.id}>
               <div className='img'>
                 <img src ={item.img} alt=""/>
@@ -104,7 +104,6 @@ const Homepage = () => {
                 <button>More Info</button>
               </div>
             </div>
-
           ))}
         </div>
       </div>
