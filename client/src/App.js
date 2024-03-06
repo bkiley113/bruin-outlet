@@ -1,3 +1,4 @@
+import "./styles/style.scss"
 import {
   createBrowserRouter,
   RouterProvider,
@@ -8,9 +9,9 @@ import MakeAccount from "./pages/MakeAccount";
 import HomePage from "./pages/HomePage";
 import Cart from "./pages/Cart";
 import Item from "./pages/Item";
+//import ProductDetail from "./pages/Item2";
 import HeaderBar from "./components/HeaderBar";
 import PageFooter from "./components/PageFooter";
-import "./style.scss"
 
 const PageFormat = () => {
   return(
@@ -34,6 +35,7 @@ const router = createBrowserRouter([
       {
         path: "/item/:id",
         element:<Item/>
+        //element:<ProductDetail/>
       },
       {
         path: "/cart",

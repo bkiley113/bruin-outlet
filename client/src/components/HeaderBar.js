@@ -26,7 +26,11 @@ const HeaderBar = () => {
                         <h6>ABOUT</h6>
                     </Link>
                     <span>Account name </span>
-                    <span>Logout </span>
+                    <span>
+                        <Link className="link" to="/login">
+                            Login
+                        </Link>
+                    </span>
                     <span className="cart">
                         <Link className="link" to="/cart">
                             <h5></h5>
