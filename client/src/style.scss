@@ -8,39 +8,37 @@
             text-decoration: none;
             color: inherit;
         }
+        //searchbar
+        .searchbar{
+            position: relative;
+            width:920px;
+            font-size: 18px;
+            padding-left: 45px;
+            padding-top: 13px;
+            padding-bottom: 12px;
+            top: 30px;
 
-        //main page
-        .homepage{
-            input{
-                width:920px;
-                font-size: 18px;
-                padding-left: 40px;
-                padding-top: 12px;
-                padding-bottom: 12px;
-
-            }
-            img{
-                position: relative;
-                top: 3px;
-                left: -955px;
-                width: 22px;
-                
-            }
-            button{
-                font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                background-color: white;
-                font-size: 17px;
-                position: relative;
-                top: -51px;
-                left: 970px;
-                padding: 14px;
-                border-color: #0C356A;
-                cursor: pointer;
-                color: #0C356A;
-                &:hover{
-                    background-color: #0C356A;
-                    color: white;
-                }
+        }
+        .search_icon{
+            position: relative;
+            width: 25px;
+            top: -11px;
+            left: 12px;
+        }
+        button.go_button{
+            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: white;
+            font-size: 17px;
+            position: relative;
+            top: -19.5px;
+            left: 945px;
+            padding: 14px;
+            border-color: #0C356A;
+            cursor: pointer;
+            color: #0C356A;
+            &:hover{
+                background-color: #0C356A;
+                color: white;
             }
         }
 

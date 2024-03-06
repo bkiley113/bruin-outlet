@@ -3,6 +3,7 @@ import search_icon from "../images/search_icon.png"
 import image1 from "../images/store.jpg"
 import image2 from "../images/crowd.jpg"
 import image3 from "../images/ppl.webp"
+import SearchBar from "../components/SearchBar.js"
 
 // const HomePage = () => {
 //     return (
@@ -48,21 +49,26 @@ const slideImages = [
 ];
 
 const Homepage = () => {
-    return (
-      <div className="slide-container">
-        <input type ="text" placeholder='Search for Products'/>
-        <Slide>
-         {slideImages.map((slideImage, index)=> (
-            <div key={index}>
-              <div style={{ ...divStyle, 'backgroundImage': `url(${slideImage.url})` }}>
-                <span style={spanStyle}>{slideImage.caption}</span>
-              </div>
+  const yourRunFunction = (userInput) => {
+    // Do something with the user input, for example, log it to the console
+    console.log('Search triggered with input:', userInput);
+    // You can perform any other actions or update the state in your HomePage component here
+  };
+  return (
+    <div>
+      <SearchBar run={yourRunFunction} />
+      <Slide>
+        {slideImages.map((slideImage, index)=> (
+          <div key={index}>
+            <div style={{ ...divStyle, 'backgroundImage': `url(${slideImage.url})` }}>
+              <span style={spanStyle}>{slideImage.caption}</span>
             </div>
-          ))} 
-        </Slide>
-        <span>BEST SELLERS</span>
-      </div>
-    )
+          </div>
+        ))} 
+      </Slide>
+      <span>BEST SELLERS</span>
+    </div>
+  )
 }
 
 export default Homepage;
