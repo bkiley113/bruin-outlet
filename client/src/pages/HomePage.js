@@ -1,23 +1,46 @@
 import React from 'react'
-import search_icon from "../images/search_icon.png"
 import image1 from "../images/store.jpg"
 import image2 from "../images/crowd.jpg"
 import image3 from "../images/ppl.webp"
 import SearchBar from "../components/SearchBar.js"
-
-// const HomePage = () => {
-//     return (
-//         <div className = 'homepage'>
-//             <input type ="text" placeholder='Search for Products'/>
-//             <img src={search_icon} alt="" />
-//             <button>GO</button>
-//         </div>
-//     )
-// }
+import {Link} from 'react-router-dom'
 
 // export default HomePage
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css'
+
+//DUMMY DATA IGNORE THIS
+  const items = [
+    {
+      id: 1,
+      title: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
+      desc: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. A possimus excepturi aliquid nihil cumque ipsam facere aperiam at! Ea dolorem ratione sit debitis deserunt repellendus numquam ab vel perspiciatis corporis!",
+      img: "https://images.pexels.com/photos/7008010/pexels-photo-7008010.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      cat: "Men",
+    },
+    {
+      id: 2,
+      title: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
+      desc: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. A possimus excepturi aliquid nihil cumque ipsam facere aperiam at! Ea dolorem ratione sit debitis deserunt repellendus numquam ab vel perspiciatis corporis!",
+      img: "https://images.pexels.com/photos/6489663/pexels-photo-6489663.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      cat: "Women",
+    },
+    {
+      id: 3,
+      title: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
+      desc: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. A possimus excepturi aliquid nihil cumque ipsam facere aperiam at! Ea dolorem ratione sit debitis deserunt repellendus numquam ab vel perspiciatis corporis!",
+      img: "https://images.pexels.com/photos/4230630/pexels-photo-4230630.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      cat: "Children",
+    },
+    {
+      id: 4,
+      title: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
+      desc: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. A possimus excepturi aliquid nihil cumque ipsam facere aperiam at! Ea dolorem ratione sit debitis deserunt repellendus numquam ab vel perspiciatis corporis!",
+      img: "https://images.pexels.com/photos/6157049/pexels-photo-6157049.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      cat: "Accessory",
+    },
+  ];
+
 
 const spanStyle = {
   padding: '20px',
@@ -66,7 +89,25 @@ const Homepage = () => {
           </div>
         ))} 
       </Slide>
-      <span>BEST SELLERS</span>
+      <div className='main'>
+        <div className='items'>
+          {items.map(item=>(
+            <div className='item' key={item.id}>
+              <div className='img'>
+                <img src ={item.img} alt=""/>
+              </div>
+              <div className='content'>
+                <Link className='link' to={`/item/${item.id}`}>
+                  <h1>{item.title}</h1>
+                </Link>
+                <p>{item.desc}</p>
+                <button>More Info</button>
+              </div>
+            </div>
+
+          ))}
+        </div>
+      </div>
     </div>
   )
 }
