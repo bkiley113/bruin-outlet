@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <script th:inline="javascript">
+        //from database to js.console, then from js to html
+        console.log("hacking..")
+        const url = window.location.href
+        let parts = url.split("/")
+        let iIndex = parts.indexOf("i")
+        let number = iIndex !== -1 && iIndex + 1 < parts.length ? parts[iIndex + 1] : null;
+        console.log(number)
+        function getItem(id){
+            fetch(`/item/${id}`)
+                .then(response=>response.json())
+                .then(data=>{
+                    console.log("name:",data.name)
+                    let d1 = document.getElementById("item_name")
+                    d1.textContent = data.name
+                    console.log("type:",data.type)
+                    let d2 = document.getElementById("item_type")
+                    d2.textContent = data.type
+                    console.log("description:",data.description)
+                    let d3 = document.getElementById("item_description")
+                    d3.textContent = data.description
+                }).catch(error=>console.error(error));
+        }
+        getItem(number)
+        //display on html
+    </script>
+    <div>
+        item name:
+    </div>
+    <div id="item_name"></div>
+    <div id="item_type"></div>
+    <div id="item_description"></div>
+    <div id="photos"></div>
+</body>
+</html>
