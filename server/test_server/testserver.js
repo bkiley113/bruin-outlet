@@ -1,8 +1,16 @@
-import express from 'express';
-const app = express()
-app.get('/', (req, res) => {
-    res.send('Hello World')
-})
-app.listen(5656, () => {
-    console.log('http://localhost:5656')
-})
+var http = require('http');
+
+var options = {
+    hostname: 'ipinfo.io',
+    port: 80,
+    path: '/json',
+    method: 'GET'
+};
+
+var request = require('request');
+
+request('http://ipinfo.io/json', function(error, response, body) {
+    var json = JSON.parse(body);
+    console.log('Your location: ' + json.city + ', ' + json.region);
+});
+
