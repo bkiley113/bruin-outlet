@@ -1,15 +1,15 @@
-// server/index.js
-
-const express = require("express");
-
-const PORT = process.env.PORT || 3001;
+const express = require('express');
+const cors = require('cors');
 
 const app = express();
 
-app.get("/api", (req, res) => {
-    res.json({ message: "Testing 123" });
+app.use(cors());
+app.use(express.json());
+
+app.get('/message', (req, res) => {
+    res.json({ message: "test123:"});
 });
 
-app.listen(PORT, () => {
-  console.log(`Server listening on ${PORT}`);
+app.listen(8000, () => {
+    console.log('Running on 8000');
 });
