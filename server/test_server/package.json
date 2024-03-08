@@ -1,18 +1,16 @@
 {
   "name": "test_server",
   "version": "1.0.0",
-  "description": "Test server before implementing full backend functionality",
-  "main": "testserver.js",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "web-app"
-  },
-  "author": "Matthew Keshishian",
+  "keywords": [],
+  "author": "",
   "license": "ISC",
   "dependencies": {
-    "request": "^2.88.2"
+    "express": "^4.18.3"
   }
 }
