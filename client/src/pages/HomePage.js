@@ -3,6 +3,7 @@ import image1 from "../images/store.jpg"
 import image2 from "../images/crowd.jpg"
 import image3 from "../images/ppl.webp"
 import SearchBar from "../components/SearchBar.js"
+import Gallery from '../components/Gallery.js'
 import {Link} from 'react-router-dom'
 
 // export default HomePage
@@ -49,29 +50,11 @@ const Homepage = ({itemsarr}) => {
         {slideImages.map((slideImage, index)=> (
           <div key={index}>
             <div style={{ ...divStyle, 'backgroundImage': `url(${slideImage.url})` }}>
-              <span style={spanStyle}>{slideImage.caption}</span>
             </div>
           </div>
         ))} 
       </Slide>
-      <div className='main'>
-        <div className='items'>
-          {itemsarr.map(item=>(
-            <div className='item' key={item.id}>
-              <div className='img'>
-                <img src ={item.img} alt=""/>
-              </div>
-              <div className='content'>
-                <Link className='link' to={`/item/${item.id}`}>
-                  <h1>{item.title}</h1>
-                </Link>
-                <p>{item.desc}</p>
-                <button>More Info</button>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+      <Gallery></Gallery>
     </div>
   )
 }
