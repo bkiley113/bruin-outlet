@@ -9,39 +9,6 @@ import {Link} from 'react-router-dom'
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css'
 
-//DUMMY DATA IGNORE THIS
-  const items = [
-    {
-      id: 1, //this will be the SKU# (i.e. GHB6008J or something like that)
-      title: "UCLA MENS HOODIE",
-      desc: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. A possimus excepturi aliquid nihil cumque ipsam facere aperiam at! Ea dolorem ratione sit debitis deserunt repellendus numquam ab vel perspiciatis corporis!",
-      img: "https://cdn.shoplightspeed.com/shops/616371/files/53697154/800x800x3/russell-athletic-ucla-joe-bear-bruins-pullover-hoo.jpg",
-      cat: "Men",
-    },
-    {
-      id: 2,
-      title: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
-      desc: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. A possimus excepturi aliquid nihil cumque ipsam facere aperiam at! Ea dolorem ratione sit debitis deserunt repellendus numquam ab vel perspiciatis corporis!",
-      img: "https://images.pexels.com/photos/6489663/pexels-photo-6489663.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      cat: "Women",
-    },
-    {
-      id: 3,
-      title: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
-      desc: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. A possimus excepturi aliquid nihil cumque ipsam facere aperiam at! Ea dolorem ratione sit debitis deserunt repellendus numquam ab vel perspiciatis corporis!",
-      img: "https://images.pexels.com/photos/4230630/pexels-photo-4230630.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      cat: "Children",
-    },
-    {
-      id: 4,
-      title: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
-      desc: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. A possimus excepturi aliquid nihil cumque ipsam facere aperiam at! Ea dolorem ratione sit debitis deserunt repellendus numquam ab vel perspiciatis corporis!",
-      img: "https://images.pexels.com/photos/6157049/pexels-photo-6157049.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      cat: "Accessory",
-    },
-  ];
-
-
 const spanStyle = {
   padding: '20px',
   background: '#efefef',
@@ -72,14 +39,12 @@ const slideImages = [
 ];
 
 const Homepage = ({itemsarr}) => {
-  const yourRunFunction = (userInput) => {
-    // Do something with the user input, for example, log it to the console
+  const searchRunFunction = (userInput) => {
     console.log('Search triggered with input:', userInput);
-    // You can perform any other actions or update the state in your HomePage component here
   };
   return (
     <div>
-      <SearchBar run={yourRunFunction} />
+      <SearchBar run={searchRunFunction} />
       <Slide>
         {slideImages.map((slideImage, index)=> (
           <div key={index}>
