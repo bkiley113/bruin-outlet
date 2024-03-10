@@ -1,50 +1,98 @@
-import React from 'react'
-import {Link} from 'react-router-dom'
-import Sidebar from '../components/Sidebar'
-import { useParams } from 'react-router-dom'
+import React, {useState} from 'react'
 
+const Item = ({itemId, itemsarr, addToCart}) => {
+    const index = itemId - 1
 
-const Item = ({itemsarr}) => {
-    const {sku} = useParams();
+    const SizeSelector = () => {
+    const [selectedSize, setSelectedSize] = useState('');
+  
+    const handleSizeSelection = (size) => {
+      setSelectedSize(size);
+    };
+  
+    return (
+        <div className="size-selector">
+            <button className="size-option" onClick={() => handleSizeSelection('S')} style={{ backgroundColor: selectedSize === 'S' ? '#0174BE' : '',
+        color: selectedSize === 'S' ? 'white' : '' }}>
+            S
+            </button>
+            <button className="size-option" onClick={() => handleSizeSelection('M')} style={{ backgroundColor: selectedSize === 'M' ? '#0174BE' : '',
+        color: selectedSize === 'M' ? 'white' : '' }}>
+            M
+            </button>
+            <button className="size-option" onClick={() => handleSizeSelection('L')} style={{ backgroundColor: selectedSize === 'L' ? '#0174BE' : '',
+        color: selectedSize === 'L' ? 'white' : '' }}>
+            L
+            </button>
+        </div>
+        );
+    };
+
+    const QuantityButton = ({ minValue = 0, maxValue = 100 }) => {
+        const [count, setCount] = useState(minValue);
+      
+        const handleIncrementCounter = () => {
+          if (count < maxValue) {
+            setCount((prevState) => prevState + 1);
+          }
+        };
+      
+        const handleDecrementCounter = () => {
+          if (count > minValue) {
+            setCount((prevState) => prevState - 1);
+          }
+        };
+      
+        return (
+            <div className="btn-group">
+                <button className="increment-btn" onClick={handleIncrementCounter}>
+                <span class="material-symbols-outlined">+</span>
+                </button>
+                <p>{count}</p>
+                <button className="decrement-btn" onClick={handleDecrementCounter}>
+                <span class="material-symbols-outlined">-</span>
+                </button>
+            </div>
+            );
+        };
+
     return (
         <div className='itempage'>
-            <p>{sku}</p>
             <div className='content'>
             <div className='mainimgcontainer'>
-
-                <img src="https://cdn.shoplightspeed.com/shops/616371/files/53697154/800x800x3/russell-athletic-ucla-joe-bear-bruins-pullover-hoo.jpg" alt=''/>
-            </div>
-            <div className='info'>
-                MEN'S NAVY BLUE BRUIN BEAR HOODIE
-            </div>
-            <div className='subtitle'>
-                SKU: 9780000484524-G
-            </div>
-            <div className="price">
-                $70.00
+                <img src={itemsarr[index].img} alt=''/>
             </div>
             <div className="divider">
-                Quantity
+                Details
             </div>
-            <div className="actions">
-                <Link to={`/cart`}>
-                <button>ADD TO CART</button>
-                </Link>
-                <Link to={`/cart`}>
-                <button>ADD TO WISHLIST</button>
-                </Link>
+                <p>{itemsarr[index].desc}</p>
             </div>
-            <h1>Lorem ipsum dolor sit amet consectetur</h1>
-                <p>sample text entry here.sample text entry here.sample text entry here.
-                sample text entry here.sample text entry here.sample text entry here.
-                sample text entry here.sample text entry here.sample text entry here.sample text entry here.
-                sample text entry here.sample text entry here.
-                </p>
+            <div className='sidebar'>
+                <div className='info'>
+                    {itemsarr[index].title}
+                </div>
+                <div className='subtitle'>
+                    SKU:{itemsarr[index].id}
+                </div>
+                <div className="price">
+                    ${itemsarr[index].price.toFixed(2)}
+                </div>
+                <div className="divider">
+                    SIZE
+                </div>
+                <SizeSelector/>
+                <div className="divider">
+                    QUANTITY
+                </div>
+                <QuantityButton minValue={1} maxValue={10} />
+                <div className="actions">
+                    <button onClick={() => addToCart(itemsarr[index])}>ADD TO CART</button>
+                    <button>ADD TO WISHLIST</button>
+                </div>
             </div>
-            <Sidebar/>
         </div>
     )
 }
 
-export default Item
+export default Item;
 
