@@ -3,11 +3,13 @@ const router = express.Router();
 import { productModel } from '../models/product.js';
 const Product = productModel;
 import mongoose from 'mongoose';
-import multer from 'multer';
-const upload = multer({dest: '../../uploads'});
+import { authentication } from '../../middleware/authenticate.js';
+
+
+
 
 //get all products
-router.get('/', (req, res, next) => {
+router.get('/', authentication, (req, res, next) => {
     Product.find().exec().then(products => {
         const response = {
             count: products.length,
@@ -33,7 +35,7 @@ router.get('/', (req, res, next) => {
 
 //create new product
 //make sure this is only callable by admins
-router.post('/', upload.single('productImage'), (req,res,next) => {
+router.post('/', (req,res,next) => {
     const id = new mongoose.Types.ObjectId();
     const product = new Product({
         _id: id,
