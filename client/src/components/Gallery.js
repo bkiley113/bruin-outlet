@@ -86,7 +86,7 @@ const Gallery = ({itemsarr}) => {
             <Link className='link' to={`/item/${item.id}`}>
               <div className="text">
                 <h6>{item.title}</h6>
-                <p>{item.price}</p>
+                <p>${item.price}</p>
               </div>
             </Link>
           </div>

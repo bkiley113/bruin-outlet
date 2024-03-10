@@ -236,7 +236,7 @@
 
         //pagefooter
         footer{
-            margin-top: 1000px;
+            margin-top: 200px;
             padding: 30px;
             background-color: rgba(#0174BE, .5);
             display: flex;
@@ -320,80 +320,14 @@
                 
             }
         }
-        //HOME
-        .main{
-            .items{
-                margin-top: 50px;
-                display: flex;
-                flex-direction: column;
-                gap: 150px;
-
-                .item{
-                    display: flex;
-                    gap: 100px;
-
-                    &:nth-child(2n+1){
-                        flex-direction: row-reverse;
-                    }
-                    .img{
-                        flex: 2;
-                        position: relative;
-                        border: 2px solid #0C356A;
-
-                        &::after{
-                            content: "";
-                            width: 100%;
-                            height:100%;
-                            object-fit: cover;
-                            position: absolute;
-                            top: 20px;
-                            left: -20px;
-                            background-color: #0C356A;
-                            z-index: -1;
-
-                        }
-                        img{
-                            width: 100%;
-                            max-height: 400px;
-                        }
-                    }
-                    .content{
-                        flex: 3;
-                        display: flex;
-                        flex-direction: column;
-                        justify-content: space-between;
-
-                        h1{
-                            font: 48px;
-
-                        }
-                        p{
-                            font-size: 18px;
-                        }
-                        button{
-                            width: max-content;
-                            padding: 10px 20px;
-                            border: none;
-                            cursor: pointer;
-                            background-color: white;
-                            border:1px solid #0174BE;
-                            color:#0174BE;
-
-                            &:hover{
-                                border: 1px solid white;
-                                background-color: #0174BE;
-                                color: white;
-                            }
-                        }
-                    }
-                }
-            }
-        }
         .itempage{
             display: flex;
+            margin-top: 50px;
             gap: 50px;
+            border-top: 2px solid #0C356A;
 
             .content{
+                margin-top: 30px;
                 flex: 5;
                 display: flex;
                 flex-direction: column;
@@ -408,56 +342,18 @@
                         object-fit: cover;
                     }
                 }
-                .info{
-                    justify-content: center;
-                    font-size: 30px;
-                    display: flex;
-                    align-items: center;
-                    font-weight: bold;
-                }
-                .subtitle{
-                    justify-content: center;
-                    font-size: 20px;
-                    display: flex;
-                    align-items: center;
-                    color:gray
-                }
-                .price{
-                    justify-content: center;
-                    font-size: 25px;
-                    display: flex;
-                    align-items: center;
-                    color:black;
-                }
                 .divider{
+                    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                    font-style: italic;
+                    font-weight: bold;
                     display: flex;
                     align-items: center;
                     width:100%;
                     height:50px;
                     font-size: 25px;
                     border-bottom: 2px solid #333;
-                    margin-bottom: 30px;
+                    margin-bottom: -10px;
                     
-                }
-                .actions{
-                    display: flex;
-                    gap: 20px;
-                    justify-content: center;
-                    button{
-                        width: max-content;
-                        padding: 7.5px 15px;
-                        border: none;
-                        cursor: pointer;
-                        background-color: white;
-                        border:1px solid #0174BE;
-                        color:#0174BE;
-
-                        &:hover{
-                            border: 1px solid white;
-                            background-color: #0174BE;
-                            color: white;
-                        }
-                    }
                 }
                 h1{
                     position: relative;
@@ -472,10 +368,124 @@
                 }
             }
             .sidebar{
+                margin-top: 30px;
+                font-style: italic;
                 flex:2;
                 display: flex;
                 flex-direction: column;
                 gap: 25px;
+
+                .info{
+                    justify-content: center;
+                    font-size: 30px;
+                    display: flex;
+                    align-items: center;
+                    font-weight: bold;
+                }
+                .subtitle{
+                    // justify-content: center;
+                    font-size: 20px;
+                    display: flex;
+                    align-items: center;
+                    color:gray
+                }
+                .price{
+                    font-size: 25px;
+                    display: flex;
+                    align-items: center;
+                    color:black;
+                }
+                .divider{
+                    display: flex;
+                    align-items: center;
+                    width:100%;
+                    height:50px;
+                    font-size: 25px;
+                    border-bottom: 2px solid #333;
+                    margin-bottom: -5px;
+                    font-weight:bolder;                    
+                }
+                .actions{
+                    display: flex;
+                    gap: 20px;
+                    justify-content: center;
+                    flex-direction: column;
+                    button{
+                        width: 100%;
+                        padding: 7.5px 15px;
+                        border: none;
+                        cursor: pointer;
+                        background-color: white;
+                        border:1px solid #0174BE;
+                        color:#0174BE;
+                        font-size: 16px;
+
+                        &:hover{
+                            border: 1px solid white;
+                            background-color: #0174BE;
+                            color: white;
+                        }
+                    }
+                }
+                .size-selector{
+                    display: flex;
+                    button{
+                        font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                        width: 100%;
+                        padding: 7.5px 15px;
+                        border: none;
+                        cursor: pointer;
+                        background-color: white;
+                        border:1px solid #0174BE;
+                        color:#0174BE;
+                        font-size: 16px;
+                        &:hover{
+                            background-color: #0174BE;
+                            color: white;
+                        }
+                    }
+                }
+                .btn-group{
+                    display: flex;
+                    width:50%;
+                    align-items: center;
+                    background-color: #fff;
+                    border-radius: 8px;
+                    overflow: hidden;
+                    border: 1px solid #4097fe;
+                    transition: border 0.3s ease;
+                    justify-content: center;
+                    margin-bottom: 0px;
+
+                    &:hover{
+                        border: 1px solid #4097fe;
+                    }
+                    button {
+                        width: 50px;
+                        height: 50px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        color: #4097fe;
+                        background-color: #fff;
+                        border: none;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+
+                        &:hover{
+                            background-color: #f3f9ff;
+                        }
+                    }
+                    p {
+                        width: 50px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        border-left: 1px solid #F5F8FB;
+                        border-right: 1px solid #F5F8FB;
+                      }
+
+                }
 
                 h1{
                     font-size: 20px;

@@ -1,6 +1,7 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
-import Sidebar from '../components/Sidebar'
+import QuantityButton from '../components/QuantityButton'
+import SizeSelector from '../components/SizeButton'
 
 const Item = ({itemId, itemsarr}) => {
    const index = itemId - 1
@@ -12,31 +13,34 @@ const Item = ({itemId, itemsarr}) => {
             <div className='mainimgcontainer'>
                 <img src={itemsarr[index].img} alt=''/>
             </div>
-            <div className='info'>
-                {itemsarr[index].title}
-            </div>
-            <div className='subtitle'>
-                {itemsarr[index].id}
-            </div>
-            <div className="price">
-                ${itemsarr[index].price.toFixed(2)}
-            </div>
             <div className="divider">
-                Quantity
+                Details
             </div>
-            <div className="actions">
-                <Link to={`/cart`}>
-                <button>ADD TO CART</button>
-                </Link>
-                <Link to={`/cart`}>
-                <button>ADD TO WISHLIST</button>
-                </Link>
+                <p>{itemsarr[index].desc}</p>
             </div>
-            <h1>Product Description</h1>
-                <p>{itemsarr[index].desc}
-                </p>
+            <div className='sidebar'>
+                <div className='info'>
+                    {itemsarr[index].title}
+                </div>
+                <div className='subtitle'>
+                    SKU:{itemsarr[index].id}
+                </div>
+                <div className="price">
+                    ${itemsarr[index].price.toFixed(2)}
+                </div>
+                <div className="divider">
+                    SIZE
+                </div>
+                <SizeSelector/>
+                <div className="divider">
+                    QUANTITY
+                </div>
+                <QuantityButton minValue={1} maxValue={10} />
+                <div className="actions">
+                    <button>ADD TO CART</button>
+                    <button>ADD TO WISHLIST</button>
+                </div>
             </div>
-            <Sidebar/>
         </div>
     )
 }
