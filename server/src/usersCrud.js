@@ -90,7 +90,7 @@ export async function deleteUsersByName(collection, name) {
     }
  }
 
- export async function loadAllProducts() {
+ export async function loadAllItems(dbName) {
     const uri = process.env.DB_URI;
     let mongoClient;
     let itemList;
@@ -98,7 +98,7 @@ export async function deleteUsersByName(collection, name) {
     try {
         mongoClient = await connectToCluster(uri);
         const db = mongoClient.db('test');
-        const collection = db.collection('products');
+        const collection = db.collection(dbName);
         itemList = await findUsersByName(collection, '');
         return itemList;
     }
