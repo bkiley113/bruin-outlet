@@ -16,13 +16,13 @@ const HeaderBar = () => {
                     <Link className="link" to="/?cat=clothes">
                         <h6 className="drop6"><Drop /></h6>
                     </Link>
-                    <Link className="link" to="/?cat=accessories">
+                    <Link className="link" to="/?cat=accessory">
                         <h6>ACCESSORIES</h6>
                     </Link>
-                    <Link className="link" to="/?cat=about">
+                    <Link className="link" to="/?cat=technology">
                         <h6>TECHNOLOGY</h6>
                     </Link>
-                    <Link className="link" to="/?cat=about">
+                    <Link className="link" to="/?cat=stationery">
                         <h6>STATIONERY</h6>
                     </Link>
                     <span>Account name </span>

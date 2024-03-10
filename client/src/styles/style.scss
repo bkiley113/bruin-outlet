@@ -3,6 +3,11 @@
     justify-content: center;
     .container{
         width: 1024px;
+        .banner{
+            display: flex;
+            position: relative;
+            margin-top: 50px;
+        }
         .link{
             text-decoration: none;
             color: inherit;

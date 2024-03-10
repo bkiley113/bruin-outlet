@@ -1,20 +1,14 @@
 import React from 'react'
-import image1 from "../images/store.jpg"
-import image2 from "../images/crowd.jpg"
-import image3 from "../images/ppl.webp"
+import image1 from "../images/slideshow/store.jpg"
+import image2 from "../images/slideshow/crowd.jpg"
+import image3 from "../images/slideshow/ppl.webp"
 import SearchBar from "../components/SearchBar.js"
 import Gallery from '../components/Gallery.js'
-import {Link} from 'react-router-dom'
+import {useSearchParams} from 'react-router-dom'
 
 // export default HomePage
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css'
-
-const spanStyle = {
-  padding: '20px',
-  background: '#efefef',
-  color: '#000000'
-}
 
 const divStyle = {
 
@@ -39,12 +33,22 @@ const slideImages = [
   },
 ];
 
+function importAll(r) {
+  let images = {};
+  r.keys().map((item, index) => { images[item.replace('./', '')] = r(item); });
+  return images;
+}
+
 const Homepage = ({itemsarr}) => {
+  const images = importAll(require.context('../images/clothingbanners', false, /\.(png|jpe?g|svg)$/));
+  const [searchParams] = useSearchParams();
+  const cat = searchParams.get('cat');
   const searchRunFunction = (userInput) => {
     console.log('Search triggered with input:', userInput);
   };
   return (
     <div>
+      <div>{cat}</div>
       <SearchBar run={searchRunFunction} />
       <Slide>
         {slideImages.map((slideImage, index)=> (
@@ -54,7 +58,10 @@ const Homepage = ({itemsarr}) => {
           </div>
         ))} 
       </Slide>
-      <Gallery></Gallery>
+      <div className='banner'>
+        <img src={images[`${cat}.png`]} alt='home'/>
+      </div>
+      <Gallery itemsarr={itemsarr}></Gallery>
     </div>
   )
 }

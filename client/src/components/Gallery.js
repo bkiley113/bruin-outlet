@@ -2,19 +2,6 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 // import './Gallery.css';
 
-const images = [
-  { src: '../images/store.jpg', alt: 'Image 1' },
-  { src: 'image2.jpg', alt: 'Image 2' },
-  { src: 'image3.jpg', alt: 'Image 3' },
-  { src: 'image4.jpg', alt: 'Image 4' },
-  { src: 'image5.jpg', alt: 'Image 5' },
-  { src: 'image1.jpg', alt: 'Image 1' },
-  { src: 'image2.jpg', alt: 'Image 2' },
-  { src: 'image3.jpg', alt: 'Image 3' },
-  { src: 'image4.jpg', alt: 'Image 4' },
-  { src: 'image5.jpg', alt: 'Image 5' }
-];
-
 const items = [
   {
     id: 1, //this will be the SKU# (i.e. GHB6008J or something like that)
@@ -82,10 +69,10 @@ const items = [
   },
 ];
 
-const Gallery = () => {
+const Gallery = ({itemsarr}) => {
   return (
     <div className="gallery">
-      {items.map((item) => (
+      {itemsarr.map((item) => (
         <div className="img">
           <Link className='link' to={`/item/${item.id}`}>
             <img
@@ -98,8 +85,8 @@ const Gallery = () => {
           <div className="imgbox">
             <Link className='link' to={`/item/${item.id}`}>
               <div className="text">
-                <h6>UCLA HOODIE</h6>
-                <p>$79.99</p>
+                <h6>{item.title}</h6>
+                <p>{item.price}</p>
               </div>
             </Link>
           </div>
