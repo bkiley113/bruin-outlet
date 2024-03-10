@@ -23,7 +23,11 @@ export async function createUserDocument(collection, userDocument) {
 
 //find user by name
 export async function findUsersByName(collection, name) {
-    return collection.find( {name }).toArray();
+    if (name == '') {
+        return collection.find().toArray();
+    }
+    else 
+        return collection.find({ name }).toArray();
 }
 
 //find user by email
@@ -47,6 +51,7 @@ export async function deleteUsersByName(collection, name) {
 //update users by 
 
 //create, read, update, delete operations
+//this is mostly a test function
  export async function executeUserCrudOperations() {
     const uri = process.env.DB_URI;
     let mongoClient;
@@ -56,24 +61,51 @@ export async function deleteUsersByName(collection, name) {
         const db = mongoClient.db('test');
         const collection = db.collection('users')
 
-        console.log('CREATE Student');
-        const userDocument = {
-            name: "Jonny"
-        }
-       await createUserDocument(collection, userDocument);
-       console.log(await findUsersByName(collection, 'Jonny'));
 
-       console.log('UPDATE Student\'s Birthdate');
-       await updateUsersByName(collection, 'Jonny', { password: "test323" });
-       console.log(await findUsersByName(collection, 'Jonny'));
+       console.log(await findUsersByName(collection, ''));
 
-       console.log('DELETE Student');
-       await deleteUsersByName(collection, 'Jonny');
-       console.log(await findUsersByName(collection, 'Jonny'));
 
     } finally {
         await mongoClient.close();
     }
+ }
+
+
+ export async function searchByName(itemName) {
+    const uri = process.env.DB_URI;
+    let mongoClient;
+    let item;
+
+    try {
+        mongoClient = await connectToCluster(uri);
+        const db = mongoClient.db('test');
+        const collection = db.collection('products');
+        item = await findUsersByName(collection, itemName);
+        return item;
+    }
+
+    finally {
+        await mongoClient.close();
+    
+    }
+ }
+
+ export async function loadAllProducts() {
+    const uri = process.env.DB_URI;
+    let mongoClient;
+    let itemList;
+
+    try {
+        mongoClient = await connectToCluster(uri);
+        const db = mongoClient.db('test');
+        const collection = db.collection('products');
+        itemList = await findUsersByName(collection, '');
+        return itemList;
+    }
+    finally {
+        await mongoClient.close();
+    }
+
  }
 
  

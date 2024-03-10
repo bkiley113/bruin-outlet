@@ -1,13 +1,14 @@
 import { config } from 'dotenv';
 import { executeUserCrudOperations } from './usersCrud.js';
 import http from 'http';
+import { app } from '../middleware/app.js';
 
 const port = process.env.PORT || 3000
 
-const server = http.createServer();
+const server = http.createServer(app);
 
 server.listen(port)
 
 
 config();
-await executeUserCrudOperations();
+//await executeUserCrudOperations();
