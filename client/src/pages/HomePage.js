@@ -50,17 +50,23 @@ const Homepage = ({itemsarr}) => {
     <div>
       <div>{cat}</div>
       <SearchBar run={searchRunFunction} />
-      {/* <Slide>
-        {slideImages.map((slideImage, index)=> (
-          <div key={index}>
-            <div style={{ ...divStyle, 'backgroundImage': `url(${slideImage.url})` }}>
-            </div>
-          </div>
-        ))} 
-      </Slide> */}
-      <div className='banner'>
-        <img src={images[`${cat}.png`]} alt='home'/>
-      </div>
+      {cat ? (
+        <div className='banner'>
+          <img src={images[`${cat}.png`]} alt=''/>
+        </div>
+      ) : (
+        <div>
+          <Slide>
+            {slideImages.map((slideImage, index) => (
+              <div key={index} className="each-slide">
+                <div style={{ ...divStyle, backgroundImage: `url(${slideImage.url})` }}>
+                  <span>{slideImage.caption}</span>
+                </div>
+              </div>
+            ))}
+          </Slide>
+        </div>
+      )}
       <Gallery itemsarr={itemsarr}></Gallery>
     </div>
   )

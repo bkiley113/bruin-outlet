@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 const MakeAccount = () => {
     return (
         <div className = 'authenticate'>
+            <Link to='/'><div className='bar'>Bar goes here, should be able to get back to homepage</div></Link>
             <h1>Register Your Account</h1>
             <form>
                 <input type="email" placeholder='email'/>
