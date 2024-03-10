@@ -61,6 +61,7 @@ function App() {
   const removeFromCart = (itemId) => {
     setCart(currentCart => currentCart.filter(item => item.id !== itemId));
   };
+  
 
   const PageFormat = () => {
     useScrollToTop();
