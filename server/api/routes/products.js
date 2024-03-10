@@ -1,7 +1,5 @@
 import express from 'express';
 const router = express.Router();
-import { searchByName } from '../../src/usersCrud.js';
-import { loadAllItems } from '../../src/usersCrud.js';
 import { productModel } from '../models/product.js';
 const Product = productModel;
 import mongoose from 'mongoose';

@@ -4,6 +4,8 @@ import { routerProduct } from '../api/routes/products.js';
 const productRoutes = routerProduct;
 import { routerOrder } from '../api/routes/orders.js';
 const orderRoutes = routerOrder;
+import { routerUser } from '../api/routes/user.js';
+const userRoutes = routerUser;
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
@@ -28,9 +30,10 @@ app.use((req, res, next) => {
     }
     next();
 });
-
+//route requests to these URLS
 app.use('/products', productRoutes);
 app.use('/orders', orderRoutes);
+app.use('/user', userRoutes);
 
 mongoose.connect(process.env.DB_URI);
 
