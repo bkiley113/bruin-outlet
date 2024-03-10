@@ -1,5 +1,5 @@
 import "./styles/style.scss"
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   createBrowserRouter,
   RouterProvider,
@@ -13,41 +13,46 @@ import Cart from "./pages/Cart";
 import Item from "./pages/Item";
 import HeaderBar from "./components/HeaderBar";
 import PageFooter from "./components/PageFooter";
+import items from './data/items.json'
 
-const items = [
-  {
-    id: 1, //this will be the SKU# (i.e. GHB6008J or something like that)
-    title: "UCLA MENS HOODIE",
-    desc: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. A possimus excepturi aliquid nihil cumque ipsam facere aperiam at! Ea dolorem ratione sit debitis deserunt repellendus numquam ab vel perspiciatis corporis!",
-    img: "https://cdn.shoplightspeed.com/shops/616371/files/53697154/800x800x3/russell-athletic-ucla-joe-bear-bruins-pullover-hoo.jpg",
-    cat: "Men",
-    price: 49.99,
-  },
-  {
-    id: 2,
-    title: "UCLA WOMEN'S T SHIRT",
-    desc: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. A possimus excepturi aliquid nihil cumque ipsam facere aperiam at! Ea dolorem ratione sit debitis deserunt repellendus numquam ab vel perspiciatis corporis!",
-    img: "https://images.pexels.com/photos/6489663/pexels-photo-6489663.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-    cat: "Women",
-    price: 59.99,
-  },
-  {
-    id: 3,
-    title: "UCLA KIDS SHORTSLEEVE",
-    desc: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. A possimus excepturi aliquid nihil cumque ipsam facere aperiam at! Ea dolorem ratione sit debitis deserunt repellendus numquam ab vel perspiciatis corporis!",
-    img: "https://images.pexels.com/photos/4230630/pexels-photo-4230630.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-    cat: "Children",
-    price: 69.99,
-  },
-  {
-    id: 4,
-    title: "UCLA FAN HAT",
-    desc: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. A possimus excepturi aliquid nihil cumque ipsam facere aperiam at! Ea dolorem ratione sit debitis deserunt repellendus numquam ab vel perspiciatis corporis!",
-    img: "https://images.pexels.com/photos/6157049/pexels-photo-6157049.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-    cat: "Accessory",
-    price: 79.99,
-  },
-];
+// const items = [
+//   {
+//     id: 1,
+//     title: "UCLA MENS HOODIE",
+//     desc: "navy blue men's hoodie",
+//     img: "https://cdn.shoplightspeed.com/shops/616371/files/53697154/800x800x3/russell-athletic-ucla-joe-bear-bruins-pullover-hoo.jpg",
+//     cat: "men",
+//     price: 49.99,
+//     incart: false
+//   },
+//   {
+//     id: 2,
+//     title: "UCLA WOMEN'S T SHIRT",
+//     desc: "white women's tee shirt",
+//     img: "https://static.nike.com/a/images/t_PDP_1280_v1/f_auto/8ecd522b-5522-401b-b19e-bd1a7ceec093/ucla-womensboxy-t-shirt-36Z2MB.png",
+//     cat: "women",
+//     price: 59.99,
+//     incart: false
+//   },
+//   {
+//     id: 3,
+//     title: "UCLA KIDS SHORTSLEEVE",
+//     desc: "kids bruinbear t shirt 100% cotton",
+//     img: "https://cdn.shoplightspeed.com/shops/616371/files/45478023/image.jpg",
+//     cat: "kids",
+//     price: 69.99,
+//     incart: false
+//   },
+//   {
+//     id: 4,
+//     title: "UCLA FAN HAT",
+//     desc: "blue UCLA hat standard sizes, elastic band for fit",
+//     img: "https://www.uclastore.com/site/product-images/95393_main.default.jpg?resizeid=3&resizeh=600&resizew=600",
+//     cat: "accessory",
+//     price: 79.99,
+//     incart: false
+//   },
+// ];
 
 
 const PageFormat = () => {

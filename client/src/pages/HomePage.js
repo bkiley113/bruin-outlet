@@ -50,14 +50,14 @@ const Homepage = ({itemsarr}) => {
     <div>
       <div>{cat}</div>
       <SearchBar run={searchRunFunction} />
-      <Slide>
+      {/* <Slide>
         {slideImages.map((slideImage, index)=> (
           <div key={index}>
             <div style={{ ...divStyle, 'backgroundImage': `url(${slideImage.url})` }}>
             </div>
           </div>
         ))} 
-      </Slide>
+      </Slide> */}
       <div className='banner'>
         <img src={images[`${cat}.png`]} alt='home'/>
       </div>
