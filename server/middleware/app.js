@@ -11,6 +11,8 @@ import { config } from 'dotenv';
 
 //load .env
 config();
+//make image folder publically/statically available
+app.use('/uploads', express.static('uploads'));
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended:false}));
