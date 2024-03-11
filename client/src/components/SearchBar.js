@@ -38,6 +38,8 @@ const SearchBar = () => {
     const queryCategory = mapInputToCategory(searchTerm);
     // Navigate to /results, set the query to matched categories
     navigate(`/results?query=${encodeURIComponent(queryCategory)}`);
+
+    setSearchTerm('');
   };
 
   return (
@@ -66,48 +68,3 @@ const SearchBar = () => {
 };
 
 export default SearchBar;
-
-
-
-
-
-// import React, { useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
-// import search_icon from "../images/search_icon.png"
-
-// const SearchBar = () => {
-//   const [searchTerm, setSearchTerm] = useState('');
-//   const navigate = useNavigate();
-
-//   const handleSearch = (event) => {
-//     event.preventDefault(); // Prevent the form from refreshing the page
-//     // Navigate to /results, optionally you can pass search term as a query parameter
-//     navigate(`/results?query=${encodeURIComponent(searchTerm)}`);
-//   };
-
-//   return (
-    // <div>
-    //     <form onSubmit={handleSearch}>
-    //     <div>
-    //         <input
-    //             type='text'
-    //             placeholder='Search for products . . .'
-    //             onChange={(e) => setSearchTerm(e.target.value)}
-    //             value={searchTerm}
-    //             className='searchbar'
-    //         />
-    //     </div>
-    //     <img 
-    //         src={search_icon}
-    //         alt=''
-    //         className='search_icon'
-    //     />
-    //     <button class="go_button">
-    //         GO
-    //     </button>
-    //     </form>
-    // </div>
-//   );
-// };
-
-// export default SearchBar;

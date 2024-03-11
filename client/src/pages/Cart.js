@@ -42,7 +42,7 @@ const Cart = () => {
                           <div
                             class="et_pb_module et_pb_post_title et_pb_post_title_0 et_pb_bg_layout_light et_pb_text_align_left et_pb_text_align_center-tablet">
                             <div class="et_pb_title_container">
-                              <h1 class="entry-title">Your Orders</h1>
+                              <h1 class="entry-title">Order History</h1>
                             </div>
                           </div>
                         </div>
@@ -89,7 +89,7 @@ const Cart = () => {
                                 <div class="et_pb_blurb_content">
                                   <div class="et_pb_main_blurb_image">
                                     <span class="et_pb_image_wrap"><span
-                                      class="et-waypoint et_pb_animation_off et_pb_animation_off_tablet et_pb_animation_off_phone et-pb-icon et-pb-icon-circle et-animated"></span></span>
+                                      class="et-waypoint et_pb_animation_off et_pb_animation_off_tablet et_pb_animation_off_phone et-pb-icon et-pb-icon-circle et-animated">✔</span></span>
                                   </div>
                                   <div class="et_pb_blurb_container">
                                     <h4 class="et_pb_module_header">
@@ -116,7 +116,7 @@ const Cart = () => {
                                       <span>Step 3/3</span>
                                     </h4>
                                     <div class="et_pb_blurb_description">
-                                      <p>Wait!</p>
+                                      <p>ON ITS WAY!</p>
                                     </div>
                                   </div>
                                 </div>
@@ -192,9 +192,9 @@ const Cart = () => {
                                             {/* Amount */}
                                             <td class="product-quantity" data-title="Quantity">
                                               <div class="quantity">
-                                                <input type="number" id="quantity_65e8f3f673515" class="input-text qty text"
-                                                  step="1" min="0" max="10" name=""
-                                                  value="1" title="Qty" size="4" placeholder="" inputmode="numeric" />
+                                                <div className='AMT'>
+                                                  numero
+                                                </div>
                                               </div>
                                             </td>
                                           </tr>

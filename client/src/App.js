@@ -32,7 +32,6 @@ function App() {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJ1c2VySWQiOiI2NWVlNjAyN2YxYzc1MTNkYjY3OTM5NmUiLCJpYXQiOjE3MTAxMzg0MjgsImV4cCI6MTcxMDE0MjAyOH0.EmMrVGvgCV2Z_nsi14gWy-w10VNoep4wpEEwyfg_bZY`
         }
       };
 
