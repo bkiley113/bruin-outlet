@@ -47,13 +47,17 @@
         }
         //login and register stuff
         .authenticate{
+            
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             height: 100vh;
-        
+            h2{
+                color: #FFC436;
+            }
             //title
+            /*
             h1{
                 text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
                 background-color: #0174BE;
@@ -68,14 +72,69 @@
                 // top: 84px;
 
             }
-
+            */
+            .loginlogo{
+                margin-top: 10px;
+                position: relative;
+                display: flex;
+                width: 200px;
+                margin-bottom: -100px;
+            }
+            .auth-container {
+                display: flex; 
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+              }
+              .form_g {
+                margin-bottom: 15px;
+                input {
+                    width: 100%;
+                    padding: 10px ;
+                    border: none;
+                    border-bottom: 2px solid #ccc;
+                    background-color: transparent;
+                    /*
+                    border-radius: 5px;
+                    border: 1px solid #ccc; */
+                  }
+                  input:focus {
+                    outline: none;
+                    border-bottom-color: #FFC436;
+                  }
+                label{
+                    color: black;
+                }
+              }
+              .form_g_r {
+                margin-bottom: 5px;
+                input {
+                    width: 100%;
+                    padding: 10px ;
+                    border: none;
+                    border-bottom: 2px solid #ccc;
+                    background-color: transparent;
+                    /*
+                    border-radius: 5px;
+                    border: 1px solid #ccc; */
+                  }
+                  input:focus {
+                    outline: none;
+                    border-bottom-color: #FFC436;
+                  }
+                label{
+                    color: black;
+                }
+              }
             //center box
             form{
                 display: flex;
                 flex-direction: column;
-                padding: 50px;
-                background-color: #0174BE;
-                width: 200px;
+                padding: 20px;
+                border-radius: 8px;
+                //background-color: #0174BE;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                width: 300px;
                 gap: 20px;
 
                 //input boxes
