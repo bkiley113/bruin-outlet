@@ -57,16 +57,17 @@ const Item = ({itemId, itemsarr, addToCart}) => {
         };
     console.log(item)
     console.log(item.category);
+    const noSize = item.category.includes("clothes") ? <SizeSelector/> : <p>N/A</p>;
     return (
       <div className='itempage'>
       <div className='content'>
       <div className='mainimgcontainer'>
-          <img src={item.productImage} alt=''/>
+        <img src={`http://localhost:3001/${item.productImage}.png`} alt=''/>
       </div>
       <div className="divider">
           Details
       </div>
-          <p>{item.name}</p>
+          <p>{item.description}</p>
       </div>
       <div className='sidebar'>
           <div className='info'>
@@ -76,18 +77,18 @@ const Item = ({itemId, itemsarr, addToCart}) => {
               SKU:{item._id}
           </div>
           <div className="price">
-              ${item.price}
+              ${item.price.toFixed(2)}
           </div>
           <div className="divider">
               SIZE
           </div>
-          <SizeSelector/>
+          {noSize}
           <div className="divider">
               QUANTITY
           </div>
           <QuantityButton minValue={1} maxValue={10} />
           <div className="actions">
-              {/* <button onClick={() => addToCart(itemsarr[index])}>ADD TO CART</button> */}
+              <button>PLACE ORDER</button>
               <button>ADD TO WISHLIST</button>
           </div>
       </div>

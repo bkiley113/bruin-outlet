@@ -3,6 +3,7 @@
     justify-content: center;
     .container{
         width: 1024px;
+        margin-top: 20px;
         .banner{
             display: flex;
             position: relative;
@@ -243,78 +244,85 @@
                 height: 50px;
             }
         }
-        .gallery{
-            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin-top: 50px;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-            grid-gap: 30px;
-            row-gap: 50px;
-            .img{
-                position: relative;
-                .imgbox{
-                    display: flex;
-                    flex-direction: column;
-                    width: 80%;
+        .gallery-container{
+            display: flex;
+            position: relative;
+            right: -45px;
+            .gallery{
+                align-items: center;
+                justify-content: center;
+                font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                margin-top: 50px;
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                grid-gap: 30px;
+                row-gap: 50px;
+                .img{
                     position: relative;
-                    top: 20px;
-                    background-color: white;
-                    border: 2px solid #0C356A;
-                    text-align: center;
-                    .text{
-                        h6{
-                            margin: 5px;
-                            top: 10px;
-                            font-size: 16px;
-                            position: relative;
+                    .imgbox{
+                        display: flex;
+                        flex-direction: column;
+                        width: 80%;
+                        position: relative;
+                        top: 20px;
+                        background-color: white;
+                        border: 2px solid #0C356A;
+                        text-align: center;
+                        .text{
+                            h6{
+                                margin: 5px;
+                                top: 10px;
+                                font-size: 16px;
+                                position: relative;
+                            }
+                            p{
+                                position: relative;
+                            }
                         }
-                        p{
-                            position: relative;
-                        }
-                    }
 
+                        &::after{
+                            content: "";
+                            width: 100%;
+                            height: 100%;
+                            object-fit: cover;
+                            position: absolute;
+                            top: 20px;
+                            left: -20px;
+                            background-color: #0C356A;
+                            z-index: -1;
+        
+                        }
+
+                    }
                     &::after{
                         content: "";
-                        width: 100%;
-                        height: 100%;
+                        width: 80%;
+                        height: 60%;
+                        // width: 60%;
+                        // height:60%;
                         object-fit: cover;
                         position: absolute;
                         top: 20px;
                         left: -20px;
                         background-color: #0C356A;
                         z-index: -1;
-    
+
                     }
-
-                }
-                &::after{
-                    content: "";
-                    width: 80%;
-                    height: 60%;
-                    // width: 60%;
-                    // height:60%;
-                    object-fit: cover;
-                    position: absolute;
-                    top: 20px;
-                    left: -20px;
-                    background-color: #0C356A;
-                    z-index: -1;
-
-                }
-                .gallery__item{
-                    margin-top:3px;
-                    width: 75%;
-                    height: 65%;
+                    .gallery__item{
+                        margin-top:3px;
+                        width: 75%;
+                        height: 65%;
+                        
+                        object-fit: cover;
+                        border: 2px solid #0C356A;
+                        background-color: white;
+                        transition: transform 0.2s ease-in-out;
+                        &:hover{
+                            transform: scale(1.05);
+                        }
+                    }
                     
-                    object-fit: cover;
-                    border: 2px solid #0C356A;
-                    background-color: white;
-                    transition: transform 0.2s ease-in-out;
-                    &:hover{
-                        transform: scale(1.05);
-                    }
                 }
-                
             }
         }
         .itempage{
@@ -362,6 +370,7 @@
                 p{
                     text-align: justify;
                     line-height: 30px;
+                    font-size: 18px;
                 }
             }
             .sidebar{
