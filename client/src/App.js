@@ -14,6 +14,8 @@ import MakeAccount from "./pages/MakeAccount";
 import HomePage from "./pages/HomePage";
 import Cart from "./pages/Cart";
 import Item from "./pages/Item";
+import Results from "./pages/Results";
+import Wishlist from "./pages/Wishlist";
 import HeaderBar from "./components/HeaderBar";
 import PageFooter from "./components/PageFooter";
 //import items from './data/items.json'
@@ -108,6 +110,14 @@ function App() {
         {
           path: "/cart",
           element:<Cart cart={cart} removeFromCart={removeFromCart}/>
+        },
+        {
+          path: "/results",
+          element: <Results itemsarr={items.products}/>,
+        },
+        {
+          path: "/wishlist",
+          element: <Wishlist />,
         },
       ]
     },

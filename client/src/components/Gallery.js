@@ -4,26 +4,39 @@ import {Link, useLocation} from 'react-router-dom';
 const Gallery = ({itemsarr}) => {
   const location = useLocation();
 
-  // A function to parse the query string and find the value of "cat"
-  const getQueryParam = (queryParamName) => {
-    const queryParams = new URLSearchParams(location.search);
-    return queryParams.get(queryParamName);
-  };
+  // Function to parse query parameters
+  const queryParams = new URLSearchParams(location.search);
+  const cat = queryParams.get('cat');
+  const searchQuery = queryParams.get('query');
 
-  // Get the category query parameter
-  const cat = getQueryParam('cat');
-
-  // Filter the items array to only include items that match the category query parameter
-  // If no category is specified, show all items
-  const filteredItems = cat
-    ? itemsarr.filter((item) => {
-        // Specifically replace "men's clothes" with "mens clothes"
-        const adjustedCategory = item.category.toLowerCase().replace("men's clothes", "men clothes");
-        // Now, split the adjusted category into words for a precise match
-        const categoryWords = adjustedCategory.split(/\s+/);
-        return categoryWords.includes(cat.toLowerCase()); // Check if the array of words includes the category exactly
-      })
-    : itemsarr;
+  // Determine filtering logic based on the presence of 'cat' or 'query'
+  let filteredItems = itemsarr;
+  if (cat) {
+    // Filter based on category
+    filteredItems = itemsarr.filter((item) => {
+      const adjustedCategory = item.category.toLowerCase().replace("men's clothes", "men clothes");
+      const categoryWords = adjustedCategory.split(/\s+/);
+      return categoryWords.includes(cat.toLowerCase());
+    });
+  } else if (searchQuery) {
+    const searchTerms = decodeURIComponent(searchQuery).toLowerCase().split(' ');
+    filteredItems = itemsarr.filter((item) => {
+      // Normalize category for consistent comparison
+      const itemCategory = item.category.toLowerCase().replace("men's", "men").replace("women's", "women");
+  
+      return searchTerms.some((term) => {
+        if (term === "men") {
+          // Ensure "men" does not match "women"
+          return itemCategory.split(/\s+/).includes("men") && !itemCategory.includes("women");
+        } else if (term === "women") {
+          return itemCategory.includes("women");
+        } else {
+          // For other terms, simply check if the category includes the term
+          return itemCategory.includes(term);
+        }
+      });
+    });
+  }
 
   return (
     <div className="gallery-container">
