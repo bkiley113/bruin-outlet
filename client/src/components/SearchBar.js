@@ -10,7 +10,7 @@ const SearchBar = () => {
     men: ['men', 'male', 'gentlemen'],
     women: ['women', 'female', 'ladies'],
     kids: ['kids', 'children', 'child'],
-    accessory: ['accessory', 'accessories'],
+    accessory: ['accessory', 'accessories', 'extras'],
     technology: ['technology', 'tech', 'gadget'],
     stationery: ['stationery', 'office', 'school']
   };
@@ -33,12 +33,10 @@ const SearchBar = () => {
   };
 
   const handleSearch = (event) => {
-    event.preventDefault(); // Prevent the form from refreshing the page
-
+    event.preventDefault();
     const queryCategory = mapInputToCategory(searchTerm);
     // Navigate to /results, set the query to matched categories
     navigate(`/results?query=${encodeURIComponent(queryCategory)}`);
-
     setSearchTerm('');
   };
 
