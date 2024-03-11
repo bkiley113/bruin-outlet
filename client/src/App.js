@@ -1,4 +1,6 @@
 import "./styles/style.scss"
+import "./styles/cart.css"
+import "./styles/cart_font.css"
 import React, { useState, useEffect } from "react";
 import {
   createBrowserRouter,
