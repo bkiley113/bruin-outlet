@@ -77,7 +77,7 @@ const Gallery = ({itemsarr}) => {
             <img
               key={item.id}
               className="gallery__item"
-              src={item.productImg}
+              src={`http://localhost:3001/${item.productImage}.png`}
               alt=''
             />
           </Link>

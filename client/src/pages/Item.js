@@ -61,7 +61,7 @@ const Item = ({itemId, itemsarr, addToCart}) => {
       <div className='itempage'>
       <div className='content'>
       <div className='mainimgcontainer'>
-          <img src={item.img} alt=''/>
+          <img src={item.productImage} alt=''/>
       </div>
       <div className="divider">
           Details

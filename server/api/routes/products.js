@@ -15,6 +15,9 @@ router.get('/', (req, res, next) => {
                     name: product.name,
                     price: product.price,
                     _id: product._id,
+                    productImage: product.productImage,
+                    description: product.description,
+                    category: product.category,
                     request: {
                         type: 'GET',
                         url: 'http:localhost:3001/products/' + product._id
