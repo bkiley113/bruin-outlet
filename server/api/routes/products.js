@@ -9,7 +9,7 @@ import { authentication } from '../../middleware/authenticate.js';
 
 
 //get all products
-router.get('/', authentication, (req, res, next) => {
+router.get('/', (req, res, next) => {
     Product.find().exec().then(products => {
         const response = {
             count: products.length,
