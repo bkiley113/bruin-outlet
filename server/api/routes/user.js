@@ -30,6 +30,7 @@ router.post('/signup', (req, res, next) => {
                         email: req.body.email,
                         password: hashpass,
                         verified: false,
+                        wishlsit: []
                 });
                 user.save().then(result=> {//verify acc
                     sendOTPEmail(result, res);
@@ -140,27 +141,25 @@ router.post("/verifyOTP", async (req, res) => {
         if (!userId || !otp) {
             throw Error("Empty otp");
         } else {
-            console.log('here');
             let user = await twofa.find({userId});
             userVerification = user;
         }
        
             if (userVerification.length > 0) {
-              
             const { expiresAt } = userVerification[0];
             const secureOTP = userVerification[0].otp;
             
             //check that OTP has not expired
    
             if (expiresAt < Date.now()) {
-           
                 await userVerification.deleteMany({userId});
                 throw new Error("Code has expired.")
             } else {
+                console.log('here');
                 //verify that the code is correct
                 const correctOTP = await bcrypt.compare(otp, secureOTP)
                 if (correctOTP) {
-    
+
                     //set user to verified by searching w userid
                     User.updateOne({_id: userId}, {verified: true});
                     OTPVerification.deleteMany({ userId });
