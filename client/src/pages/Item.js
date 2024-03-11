@@ -56,7 +56,7 @@ const Item = ({itemId, itemsarr, addToCart}) => {
             );
         };
     console.log(item)
-    console.log(item.productImage);
+    console.log(item.category);
     return (
       <div className='itempage'>
       <div className='content'>
