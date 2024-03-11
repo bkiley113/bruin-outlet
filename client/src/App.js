@@ -30,7 +30,7 @@ function App() {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJ1c2VySWQiOiI2NWVlNjAyN2YxYzc1MTNkYjY3OTM5NmUiLCJpYXQiOjE3MTAxMjU4ODMsImV4cCI6MTcxMDEyOTQ4M30.cfw2FBB0_VF22IZU0E6oGUcLTeewzi-2zkDdyugzsXM`
+          'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJ1c2VySWQiOiI2NWVlNjAyN2YxYzc1MTNkYjY3OTM5NmUiLCJpYXQiOjE3MTAxMjY0MDksImV4cCI6MTcxMDEzMDAwOX0.OYWVNkuXGg9M4kg6nrWwkvVqE5yWY8mxaZ4bQ1NJtyI`
         }
       };
 
