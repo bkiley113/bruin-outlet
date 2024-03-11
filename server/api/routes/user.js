@@ -30,7 +30,7 @@ router.post('/signup', (req, res, next) => {
                         email: req.body.email,
                         password: hashpass,
                         verified: false,
-                        wishlsit: []
+                        wishlist: []
                 });
                 user.save().then(result=> {//verify acc
                     sendOTPEmail(result, res);
@@ -182,6 +182,65 @@ router.post("/verifyOTP", async (req, res) => {
         });
     }
 });
+//get all wishlist items
+router.get('/wishlist', (req, res, next) => {
+    //req format: "userId: _id"
+    let userId = req.body._id;
+    User.findOne({_id: userId}).exec().then(user => {
+        const wishlist = user.wishlist;
+        res.status(200).json({
+            _id: userId,
+            wishlist
+        });
+    })
+    .catch(err => {
+        res.status(500).json({
+            error: err
+        })
+    });
+});
+
+//add a wishlist item
+router.post('/wishlist', (req, res, next) =>{
+    //req format: {
+    //"uid": "user id"
+    //"pid": "product id" }
+    let userId = req.body.uid;
+    let productId = req.body.pid;
+    User.updateOne({_id: userId}, {$push: { wishlist: productId}}).exec().then(result => {
+        res.status(201).json({
+            ProductID: productId,
+            message: "Product added to wishlist"
+        })
+    }).catch(err => {
+        res.status(500).json({
+            error: err
+        });
+    });
+})
+
+//delete a wishlist item
+router.delete('/wishlist', (req, res, next) =>{
+    //req format: {
+    //"uid": "user id"
+    //"pid": "product id" }
+    let userId = req.body.uid;
+    let productId = req.body.pid;
+    User.updateOne({_id: userId}, {$pull: { wishlist: productId}}).exec().then(result => {
+        if (result.modifiedCount === 0) {
+            res.status(404).json({
+                message: `Product ID ${productId} is not in wishlist!`
+            })
+        } else {
+        res.status(200).json({
+            message: `Product ID ${productId} removed from wishlist.`
+        })};
+    }).catch(err => {
+        res.status(500).json({
+            error: err
+        });
+    });
+})
 
 const routerUser = router;
 export { routerUser };
