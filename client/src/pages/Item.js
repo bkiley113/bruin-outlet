@@ -56,9 +56,9 @@ const Item = ({itemId, itemsarr, addToCart}) => {
             );
         };
     console.log(itemId);
-    console.log(item);
+    console.log(item.name);
     return (
-        <p>ok</p>
+        <p>{item.name}</p>
     )
 }
 
