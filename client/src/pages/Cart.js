@@ -42,7 +42,7 @@ const Cart = () => {
                           <div
                             class="et_pb_module et_pb_post_title et_pb_post_title_0 et_pb_bg_layout_light et_pb_text_align_left et_pb_text_align_center-tablet">
                             <div class="et_pb_title_container">
-                              <h1 class="entry-title">Cart</h1>
+                              <h1 class="entry-title">Your Orders</h1>
                             </div>
                           </div>
                         </div>
@@ -96,7 +96,7 @@ const Cart = () => {
                                       <span>Step 2/3</span>
                                     </h4>
                                     <div class="et_pb_blurb_description">
-                                      <p>Cart</p>
+                                      <p>order</p>
                                     </div>
                                   </div>
                                 </div>
@@ -116,7 +116,7 @@ const Cart = () => {
                                       <span>Step 3/3</span>
                                     </h4>
                                     <div class="et_pb_blurb_description">
-                                      <p>Checkout</p>
+                                      <p>Wait!</p>
                                     </div>
                                   </div>
                                 </div>
