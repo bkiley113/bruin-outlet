@@ -16,27 +16,39 @@ import Cart from "./pages/Cart";
 import Item from "./pages/Item";
 import HeaderBar from "./components/HeaderBar";
 import PageFooter from "./components/PageFooter";
-import items from './data/items.json'
+//import items from './data/items.json'
 
 
 function App() {
-  // const[items, setItems] = useState([]);
-  // useEffect(() => {
-  //   fetch('http://localhost:3001/products')
-  //     .then(response => {
-  //       if (!response.ok) {
-  //         throw new Error('Network response was not ok');
-  //       }
-  //       return response.json();
-  //     })
-  //     .then(data => {
-  //       setItems(data);
-  //     })
-  //     .catch(error => {
-  //       console.error("Failed to fetch products:", error);
-  //     });
-  // }, []);
+  const [cart, setCart] = useState([]);
+  const [items, setItems] = useState({products: []});
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const url = 'http://localhost:3001/products';
+      const options = {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJ1c2VySWQiOiI2NWVlNjAyN2YxYzc1MTNkYjY3OTM5NmUiLCJpYXQiOjE3MTAxMjE2OTIsImV4cCI6MTcxMDEyNTI5Mn0.kcEOB6PEPgfhIjJ-X-eeRPNfWNrHX9-IROmoByfeFLs`
+        }
+      };
+
+      try {
+        const response = await fetch(url, options);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        setItems(data); // Now 'fetched' stores the entire object including 'products'
+      } catch (error) {
+        console.error('Could not fetch the data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+  
   const useScrollToTop = () => {
     const { pathname } = useLocation();
   
@@ -44,8 +56,6 @@ function App() {
       window.scrollTo(0, 0);
     }, [pathname]);
   };
-
-  const [cart, setCart] = useState([]);
 
   const addToCart = (item) => {
     setCart((currentCart) => {
@@ -77,8 +87,8 @@ function App() {
   };
   const ItemWrapper = () => {
     const { id } = useParams();
-    const num = Number(id);
-    return <Item itemId={num} itemsarr={items} addToCart={addToCart}/>;
+    const num = (id);
+    return <Item itemId={num} itemsarr={items.products} addToCart={addToCart}/>;
   };
 
   const router = createBrowserRouter([
@@ -88,7 +98,7 @@ function App() {
       children:[
         {
           path: "/",
-          element:<HomePage itemsarr={items}/>
+          element:<HomePage itemsarr={items.products}/>
         },
         {
           path: "/item/:id",
@@ -113,9 +123,9 @@ function App() {
 
   return (
     <div className="app">
-        <div className="container">
-          <RouterProvider router={router}/>
-        </div>
+      <div className="container">
+        <RouterProvider router={router}/>
+      </div>
     </div>
   );
 }

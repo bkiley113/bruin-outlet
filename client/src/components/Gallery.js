@@ -1,6 +1,5 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-// import './Gallery.css';
 
 const items = [
   {
@@ -74,7 +73,7 @@ const Gallery = ({itemsarr}) => {
     <div className="gallery">
       {itemsarr.map((item) => (
         <div className="img">
-          <Link className='link' to={`/item/${item.id}`}>
+          <Link className='link' to={`/item/${item._id}`}>
             <img
               key={item.id}
               className="gallery__item"
@@ -83,7 +82,7 @@ const Gallery = ({itemsarr}) => {
             />
           </Link>
           <div className="imgbox">
-            <Link className='link' to={`/item/${item.id}`}>
+            <Link className='link' to={`/item/${item._id}`}>
               <div className="text">
                 <h6>{item.title}</h6>
                 <p>${item.price}</p>
