@@ -55,7 +55,8 @@ const Item = ({itemId, itemsarr, addToCart}) => {
             </div>
             );
         };
-    console.log(itemId);
+    console.log(item)
+    console.log(item.productImage);
     return (
       <div className='itempage'>
       <div className='content'>

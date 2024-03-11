@@ -5,9 +5,6 @@ const Product = productModel;
 import mongoose from 'mongoose';
 import { authentication } from '../../middleware/authenticate.js';
 
-
-
-
 //get all products
 router.get('/', (req, res, next) => {
     Product.find().exec().then(products => {

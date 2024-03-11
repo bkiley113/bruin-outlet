@@ -77,14 +77,14 @@ const Gallery = ({itemsarr}) => {
             <img
               key={item.id}
               className="gallery__item"
-              src={item.img}
+              src={item.productImg}
               alt=''
             />
           </Link>
           <div className="imgbox">
             <Link className='link' to={`/item/${item._id}`}>
               <div className="text">
-                <h6>{item.title}</h6>
+                <h6>{item.name}</h6>
                 <p>${item.price}</p>
               </div>
             </Link>
