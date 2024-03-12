@@ -34,7 +34,7 @@ router.get('/', (req, res, next) => {
 });
 
 //create new product
-//make sure this is only callable by admins
+//for test use only, comment out in final build
 router.post('/', (req,res,next) => {
     const id = new mongoose.Types.ObjectId();
     const product = new Product({

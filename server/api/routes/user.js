@@ -203,7 +203,7 @@ router.post("/verifyOTP", async (req, res) => {
 //get all wishlist items
 router.get('/wishlist', authenticator, (req, res, next) => {
     //req format: "userId: _id"
-    let userId = req.body._id;
+    let userId = req.quiery._id;
     User.findOne({_id: userId}).exec().then(user => {
         const wishlist = user.wishlist;
         res.status(200).json({
@@ -242,8 +242,8 @@ router.delete('/wishlist', authenticator, (req, res, next) =>{
     //req format: {
     //"uid": "user id"
     //"pid": "product id" }
-    let userId = req.body.uid;
-    let productId = req.body.pid;
+    let userId = req.query.uid;
+    let productId = req.query.pid;
     User.updateOne({_id: userId}, {$pull: { wishlist: productId}}).exec().then(result => {
         if (result.modifiedCount === 0) {
             res.status(404).json({

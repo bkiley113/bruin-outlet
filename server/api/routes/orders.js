@@ -70,7 +70,7 @@ router.post('/', authenticator, (req, res, next) => {
             },
             request: {
                 type: 'POST',
-                url: 'http://localhost:3001/orders/' + result._id
+                url: `http://localhost:${process.env.PORT}/orders/` + result._id
             }
     });
 }).catch(err => {
@@ -81,7 +81,9 @@ router.post('/', authenticator, (req, res, next) => {
 
 //find all orders
 router.get('/', authenticator, (req, res, next) => {
-    Order.find({uid: req.body.uid}).select("pid quantity _id").populate('pid').exec().then(ords => {        res.status(200).json({
+    //query format:
+    //{uid: user ID}
+    Order.find({uid: req.query.uid}).select("pid quantity _id").populate('pid').exec().then(ords => {        res.status(200).json({
             count: ords.length,
             orders: ords.map(ord => {
                 return{
@@ -89,7 +91,7 @@ router.get('/', authenticator, (req, res, next) => {
                     quantity: ord.quantity,
                     request: {
                         type: 'GET',
-                        url: 'http://localhost:3001/orders/' + ord._id
+                        url: `http://localhost:${process.env.PORT}/orders/` + ord._id
                     }
                 }
             })
