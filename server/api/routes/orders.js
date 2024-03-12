@@ -5,19 +5,28 @@ import { orderModel } from '../models/order.js';
 const Order = orderModel; 
 import { productModel } from '../models/product.js';
 const Product = productModel;
+import { authenticator } from '../../middleware/authenticate.js';
 
 //create an order
-router.post('/', (req, res, next) => {
+router.post('/', authenticator, (req, res, next) => {
+    /*request format:
+    {
+        uid: user ID
+        quantity: quantity of items
+        pid: product id
+    }
+    */
     //check that product id exists
-    Product.findById(req.body.productId).then(product=> {
+    Product.findById(req.body.pid).exec().then(product=> {
         if (!product){
-            return res.status(404).json({message: "Product not found!"});
+            throw ("Product not found!");
         }
         //if succeeds, create new order
         const order = new Order({
             _id: new mongoose.Types.ObjectId(),
+            uid: req.body.uid,
             quantity: req.body.quantity,
-            product: req.body.productId
+            pid: req.body.pid
         });
         return order.save();
     }).then(result => {
@@ -25,7 +34,8 @@ router.post('/', (req, res, next) => {
             message: 'Order created!',
             createdOrder: {
                 _id: result._id,
-                product: result.product,
+                uid: req.body.userId,
+                pid: result.product,
                 quantity: result.quantity
             },
             request: {
