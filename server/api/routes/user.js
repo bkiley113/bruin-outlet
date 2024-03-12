@@ -6,6 +6,7 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 import nodemailer from 'nodemailer';
 import jwt from 'jsonwebtoken';
+import { authenticator } from '../../middleware/authenticate.js';
 import { config } from 'dotenv';
 config();
 
@@ -84,12 +85,12 @@ router.post('/login', (req, res, next) => {
     });
 })
 
-//set up mailing through outlook
+//set up mailing through gmail
 let transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: "bruinoutlet@gmail.com",
-        pass: "vaer qjhk jfco nbwz "
+        user: `${process.env.AUTH_EMAIL}`,
+        pass: `${process.env.AUTH_PASS}`
     }
 });
 
@@ -97,7 +98,7 @@ transporter.verify((err, success) => {
     if (err) {
         console.log(err);
     } else {
-        console.log("SMTP Success");
+        console.log("SMTP Success: users");
         console.log(success);
     }
 })
@@ -200,7 +201,7 @@ router.post("/verifyOTP", async (req, res) => {
     }
 });
 //get all wishlist items
-router.get('/wishlist', (req, res, next) => {
+router.get('/wishlist', authenticator, (req, res, next) => {
     //req format: "userId: _id"
     let userId = req.body._id;
     User.findOne({_id: userId}).exec().then(user => {
@@ -218,7 +219,7 @@ router.get('/wishlist', (req, res, next) => {
 });
 
 //add a wishlist item
-router.post('/wishlist', (req, res, next) =>{
+router.post('/wishlist', authenticator, (req, res, next) =>{
     //req format: {
     //"uid": "user id"
     //"pid": "product id" }
@@ -237,7 +238,7 @@ router.post('/wishlist', (req, res, next) =>{
 })
 
 //delete a wishlist item
-router.delete('/wishlist', (req, res, next) =>{
+router.delete('/wishlist', authenticator, (req, res, next) =>{
     //req format: {
     //"uid": "user id"
     //"pid": "product id" }
