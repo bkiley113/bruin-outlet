@@ -19,25 +19,16 @@ const Gallery = ({itemsarr}) => {
         const categoryWords = adjustedCategory.split(/\s+/);
         return categoryWords.includes(cat.toLowerCase());
       });
-    } else if (searchQuery != null) {
-      const trimmedQuery = searchQuery.trim();
-      if (trimmedQuery === '') {
-        items = [];
-        setNotFoundFlag(true);
+    } else if (searchQuery) {
+      // New name-based filtering
+      const trimmedQuery = searchQuery.trim().toLowerCase();
+      if (trimmedQuery) {
+        items = items.filter(item =>
+          item.name.toLowerCase().includes(trimmedQuery)
+        );
       } else {
-        const searchTerms = decodeURIComponent(trimmedQuery).toLowerCase().split(' ');
-        items = itemsarr.filter((item) => {
-          const itemCategory = item.category.toLowerCase().replace("men's", "men").replace("women's", "women");
-          return searchTerms.some(term => {
-            if (term === "men") {
-              return itemCategory.split(/\s+/).includes("men") && !itemCategory.includes("women");
-            } else if (term === "women") {
-              return itemCategory.includes("women");
-            } else {
-              return itemCategory.includes(term);
-            }
-          });
-        });
+        setNotFoundFlag(true);
+        items = [];
       }
     }
     setFilteredItems(items);

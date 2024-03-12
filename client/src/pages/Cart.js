@@ -12,21 +12,25 @@ const Cart = () => {
     if (!authToken) {
       return;// Prevent further execution
     }
-    fetch('http://localhost:3001/orders')
+    fetch(`http://localhost:3001/orders?uid=${userId}`, {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    })
       .then((response) => response.json())
       .then((data) => {
         // Assuming the data is in the format you provided
         const loadedProducts = data.orders
-          .filter((order) => order.product) // Ensure we only include orders with a product
+          .filter((order) => order.pid) // Ensure we only include orders with a product
           .map((order) => ({
-            ...order.product,
+            ...order.pid,
             quantity: order.quantity,
           }));
 
         setProducts(loadedProducts);
       })
       .catch((error) => console.error('Error fetching products:', error));
-  }, []);
+  }, [authToken, userId]);
 
   const filteredOrders = products.filter(product => 
     product && 

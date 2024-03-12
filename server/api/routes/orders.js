@@ -83,12 +83,13 @@ router.post('/', authenticator, (req, res, next) => {
 router.get('/', authenticator, (req, res, next) => {
     //query format:
     //{uid: user ID}
-    Order.find({uid: req.query.uid}).select("pid quantity _id").populate('pid').exec().then(ords => {        res.status(200).json({
+    Order.find({uid: req.query.uid}).select("pid quantity _id uid").populate('pid').exec().then(ords => {        res.status(200).json({
             count: ords.length,
             orders: ords.map(ord => {
                 return{
                     pid: ord.pid,
                     quantity: ord.quantity,
+                    uid: ord.uid,
                     request: {
                         type: 'GET',
                         url: `http://localhost:${process.env.PORT}/orders/` + ord._id
