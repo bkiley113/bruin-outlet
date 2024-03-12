@@ -6,13 +6,13 @@ const PageFooter = () => {
         <footer>
             <img src={logo} alt="" />
             <span>
-                Footer information here!!!
+                Thank you for visiting!
             </span>
             <span>
-                Footer information here!!!
+                UCLA Outlet, est. 2024
             </span>
             <span>
-                Footer information here!!!
+                Great products, for cheap
             </span>
         </footer>
     )

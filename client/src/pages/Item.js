@@ -1,8 +1,12 @@
 import React, {useState} from 'react'
+import { useAuth } from "../components/AuthContext.js"
+import AuthWarning from '../components/warning.js';
 
 const Item = ({itemId, itemsarr, addToCart}) => {
     const item = itemsarr.find(item => item._id === itemId);
     const [count, setCount] = useState(1);
+    const { authToken, userId } = useAuth();
+    const [responseMessage, setResponseMessage] = useState('');
 
     const handleIncrementCounter = () => {
         setCount((prevState) => Math.min(prevState + 1, 10)); // Assuming 100 is the maxValue
@@ -13,15 +17,21 @@ const Item = ({itemId, itemsarr, addToCart}) => {
     };
 
     const placeOrder = async () => {
+        if (!authToken) {
+            alert('Please log in to place an order.');
+            return;
+        }
         try {
           const response = await fetch('http://localhost:3001/orders/', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
+              'Authorization': `Bearer ${authToken}`,
             },
             body: JSON.stringify({
+              uid: userId,
               quantity: count,
-              productId: item._id,
+              pid: item._id,
             }),
           });
     
@@ -38,6 +48,43 @@ const Item = ({itemId, itemsarr, addToCart}) => {
           alert('Failed to place order');
         }
       };
+
+
+      const addToWishlist = async () => {
+        if (!authToken) {
+            alert('Please log in to add items to your wishlist.');
+            return;
+        }
+        try {
+            const response = await fetch('http://localhost:3001/user/wishlist', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${authToken}`,
+                },
+                body: JSON.stringify({ 
+                    uid: userId, 
+                    pid: item._id,
+                }),
+            });
+      
+            const data = await response.json(); // Move this line inside the try block to catch parsing errors
+            
+            if (!response.ok) {
+                // It's important to check response.ok after attempting to parse the response
+                // This allows you to handle both network errors and non-2xx HTTP responses.
+                throw new Error(data.message || 'Something went wrong with adding to wishlist');
+            }
+            
+            console.log('Added to wishlist successfully:', data);
+            setResponseMessage('Item added to wishlist successfully!');
+            alert('Item added to wishlist successfully');
+        } catch (error) {
+            console.error('Failed to add to wishlist:', error);
+            setResponseMessage('Failed to add to wishlist');
+            alert('Failed to add to wishlist');
+        }
+    };
 
     const SizeSelector = () => {
         const [selectedSize, setSelectedSize] = useState('');
@@ -79,46 +126,44 @@ const Item = ({itemId, itemsarr, addToCart}) => {
     console.log(item.category);
     const noSize = item.category.includes("clothes") ? <SizeSelector/> : <p>N/A</p>;
     return (
-      <div className='itempage'>
-        <p>{count}</p>
-      <div className='content'>
-      <div className='mainimgcontainer'>
-        <img src={`http://localhost:3001/${item.productImage}.png`} alt=''/>
-      </div>
-      <div className="divider">
-          Details
-      </div>
-          <p>{item.description}</p>
-      </div>
-      <div className='sidebar'>
-          <div className='info'>
-              {item.name}
-          </div>
-          <div className='subtitle'>
-              SKU:{item._id}
-          </div>
-          <div className="price">
-              ${item.price.toFixed(2)}
-          </div>
-          <div className="divider">
-              SIZE
-          </div>
-          {noSize}
-          <div className="divider">
-              QUANTITY
-          </div>
-          <QuantityButton count={count} handleIncrementCounter={handleIncrementCounter} handleDecrementCounter={handleDecrementCounter} />
-          <div className="actions">
-              <button onClick={placeOrder}>PLACE ORDER</button>
-              <button>ADD TO WISHLIST</button>
-          </div>
-      </div>
-  </div>
+    <div>
+        <div className='itempage'>
+            <p>{count}</p>
+        <div className='content'>
+        <div className='mainimgcontainer'>
+            <img src={`http://localhost:3001/${item.productImage}.png`} alt=''/>
+        </div>
+        <div className="divider">
+            Details
+        </div>
+            <p>{item.description}</p>
+        </div>
+        <div className='sidebar'>
+            <div className='info'>
+                {item.name}
+            </div>
+            <div className='subtitle'>
+                SKU:{item._id}
+            </div>
+            <div className="price">
+                ${item.price.toFixed(2)}
+            </div>
+            <div className="divider">
+                SIZE
+            </div>
+            {noSize}
+            <div className="divider">
+                QUANTITY
+            </div>
+            <QuantityButton count={count} handleIncrementCounter={handleIncrementCounter} handleDecrementCounter={handleDecrementCounter} />
+            <div className="actions">
+                <button onClick={placeOrder}>PLACE ORDER</button>
+                <button onClick={addToWishlist}>ADD TO WISHLIST</button>
+            </div>
+        </div>
+    </div>
+    </div>
   );
 }
 
 export default Item;
-
-
-
-

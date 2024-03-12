@@ -48,7 +48,6 @@ const Homepage = ({itemsarr}) => {
   };
   return (
     <div>
-      <div>{cat}</div>
       <SearchBar />
       {cat ? (
         <div className='banner'>

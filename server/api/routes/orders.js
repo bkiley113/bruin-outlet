@@ -34,8 +34,8 @@ router.post('/', authenticator, (req, res, next) => {
             message: 'Order created!',
             createdOrder: {
                 _id: result._id,
-                uid: req.body.userId,
-                pid: result.product,
+                uid: req.body.uid,
+                pid: result.pid,
                 quantity: result.quantity
             },
             request: {
@@ -51,12 +51,13 @@ router.post('/', authenticator, (req, res, next) => {
 
 //find all orders
 router.get('/', (req, res, next) => {
-    Order.find().select("product quantity _id").populate('product').exec().then(ords => {
+    Order.find().select("product quantity _id").populate('pid').exec().then(ords => {
         res.status(200).json({
             count: ords.length,
             orders: ords.map(ord => {
                 return{
-                    product: ord.product,
+                    uid: ord.uid,
+                    product: ord.pid,
                     quantity: ord.quantity,
                     request: {
                         type: 'GET',

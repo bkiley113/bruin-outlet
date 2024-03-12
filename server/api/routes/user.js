@@ -7,6 +7,7 @@ import bcrypt from 'bcrypt';
 import nodemailer from 'nodemailer';
 import jwt from 'jsonwebtoken';
 import { config } from 'dotenv';
+import { authenticator } from '../../middleware/authenticate.js';
 config();
 
 import { userModel } from '../models/user.js';
@@ -200,9 +201,26 @@ router.post("/verifyOTP", async (req, res) => {
     }
 });
 //get all wishlist items
-router.get('/wishlist', (req, res, next) => {
-    //req format: "userId: _id"
-    let userId = req.body._id;
+// router.get('/wishlist', authenticator, (req, res, next) => {
+//     //req format: "userId: _id"
+//     let userId = req.body._id;
+//     User.findOne({_id: userId}).exec().then(user => {
+//         const wishlist = user.wishlist;
+//         res.status(200).json({
+//             _id: userId,
+//             wishlist
+//         });
+//     })
+//     .catch(err => {
+//         res.status(500).json({
+//             error: err
+//         })
+//     });
+// });
+
+router.get('/wishlist', authenticator, (req, res, next) => {
+    // Accessing userId from query parameters
+    let userId = req.query._id;
     User.findOne({_id: userId}).exec().then(user => {
         const wishlist = user.wishlist;
         res.status(200).json({
@@ -213,12 +231,14 @@ router.get('/wishlist', (req, res, next) => {
     .catch(err => {
         res.status(500).json({
             error: err
-        })
+        });
     });
 });
 
+
+
 //add a wishlist item
-router.post('/wishlist', (req, res, next) =>{
+router.post('/wishlist', authenticator, (req, res, next) =>{
     //req format: {
     //"uid": "user id"
     //"pid": "product id" }
@@ -237,27 +257,58 @@ router.post('/wishlist', (req, res, next) =>{
 })
 
 //delete a wishlist item
-router.delete('/wishlist', (req, res, next) =>{
-    //req format: {
-    //"uid": "user id"
-    //"pid": "product id" }
-    let userId = req.body.uid;
-    let productId = req.body.pid;
-    User.updateOne({_id: userId}, {$pull: { wishlist: productId}}).exec().then(result => {
+// router.delete('/wishlist', (req, res, next) =>{
+//     //req format: {
+//     //"uid": "user id"
+//     //"pid": "product id" }
+//     let userId = req.body.uid;
+//     let productId = req.body.pid;
+//     User.updateOne({_id: userId}, {$pull: { wishlist: productId}}).exec().then(result => {
+//         if (result.modifiedCount === 0) {
+//             res.status(404).json({
+//                 message: `Product ID ${productId} is not in wishlist!`
+//             })
+//         } else {
+//         res.status(200).json({
+//             message: `Product ID ${productId} removed from wishlist.`
+//         })};
+//     }).catch(err => {
+//         res.status(500).json({
+//             error: err
+//         });
+//     });
+// })
+
+router.delete('/wishlist', authenticator, (req, res, next) => {
+    // Extracting uid and pid from query parameters
+    const userId = req.query.uid;
+    const productId = req.query.pid;
+
+    if (!userId || !productId) {
+        return res.status(400).json({
+            message: "Missing user ID or product ID."
+        });
+    }
+
+    User.updateOne({_id: userId}, {$pull: { wishlist: productId }})
+    .exec()
+    .then(result => {
         if (result.modifiedCount === 0) {
             res.status(404).json({
-                message: `Product ID ${productId} is not in wishlist!`
-            })
+                message: `Product ID ${productId} is not in the wishlist or invalid user ID.`
+            });
         } else {
-        res.status(200).json({
-            message: `Product ID ${productId} removed from wishlist.`
-        })};
-    }).catch(err => {
+            res.status(200).json({
+                message: `Product ID ${productId} removed from wishlist.`
+            });
+        }
+    })
+    .catch(err => {
         res.status(500).json({
             error: err
         });
     });
-})
+});
 
 const routerUser = router;
 export { routerUser };

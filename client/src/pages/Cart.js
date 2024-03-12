@@ -1,45 +1,47 @@
-import React from 'react'
-
-const orders = [
-  {
-      "product": {
-          "_id": "65eea8e74690f92f355a8807",
-          "name": "UCLA Men's Hoodie",
-          "price": 65,
-          "productImage": "uploads/65eea8e74690f92f355a8807",
-          "description": "Cozy and warm hoodie with the UCLA logo, perfect for showing school spirit during chilly evenings.",
-          "category": "men clothes",
-          "__v": 0
-      },
-      "quantity": 1,
-      "request": {
-          "type": "GET",
-          "url": "http://localhost:3001/orders/65eec69d4690f92f355a8849"
-      }
-  },
-  {
-      "product": {
-          "_id": "65eea91d4690f92f355a880d",
-          "name": "UCLA Leather Backpack",
-          "price": 120,
-          "productImage": "uploads/65eea91d4690f92f355a880d",
-          "description": "Durable leather backpack embossed with the UCLA logo, combining functionality with Bruins pride.",
-          "category": "accessory",
-          "__v": 0
-      },
-      "quantity": 1,
-      "request": {
-          "type": "GET",
-          "url": "http://localhost:3001/orders/65ef6287a32628f27968e6d8"
-      }
-  }
-]
-
-const subtotal = orders.reduce((sum, order) => sum + (order.product.price * order.quantity), 0);
-const total = (subtotal + (0.0925 * subtotal)).toFixed(2);
+import React, { useState, useEffect } from 'react';
+import {useAuth} from "../components/AuthContext.js"
+import { useNavigate } from 'react-router-dom';
+import AuthWarning from '../components/warning.js';
 
 const Cart = () => {
+
+  const [products, setProducts] = useState([]);
+  const { authToken, userId } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!authToken) {
+      return;// Prevent further execution
+    }
+    fetch('http://localhost:3001/orders')
+      .then((response) => response.json())
+      .then((data) => {
+        // Assuming the data is in the format you provided
+        const loadedProducts = data.orders
+          .filter((order) => order.product) // Ensure we only include orders with a product
+          .map((order) => ({
+            ...order.product,
+            quantity: order.quantity,
+          }));
+
+        setProducts(loadedProducts);
+      })
+      .catch((error) => console.error('Error fetching products:', error));
+  }, []);
+
+  const filteredOrders = products.filter(product => 
+    product && 
+    product.productImage && 
+    product.price !== undefined && 
+    product.quantity !== undefined && 
+    product.name
+  );
+  const subtotal = filteredOrders.reduce((sum, order) => sum + (order.price * order.quantity), 0);
+  const total = (subtotal + (0.0925 * subtotal)).toFixed(2);
+
+
   return (
+    <div>{!authToken && <AuthWarning letter='c' />}
     <div id="page-container">
       <div id="et-boc" class="et-boc">
         <div id="et-main-area">
@@ -171,9 +173,7 @@ const Cart = () => {
                                         </tr>
                                       </thead>
                                       <tbody>
-
-                                        {orders.map(item => (
-                                          /* Chosen Itemization Row */
+                                        {filteredOrders.map((product) => (
                                           <tr class="woocommerce-cart-form__cart-item cart_item">
                                             {/* Remove Product Button */}
                                             <td class="product-remove">
@@ -187,28 +187,28 @@ const Cart = () => {
                                             <a><img fetchpriority="high"
                                               /* <a href={`/item/${item.product._id}`}><img fetchpriority="high" */
                                                 decoding="async" width="300" height="300"
-                                                src={`http://localhost:3001/${item.product.productImage}.png`}
+                                                src={`http://localhost:3001/${product.productImage}.png`}
                                                 class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail"
                                                 alt="" /></a>
                                             </td>
 
                                             {/* Name */}
                                             <td class="product-name" data-title="Product">
-                                            <a>{item.product.name}</a>
+                                            <a>{product.name}</a>
                                               {/* <a href="placeholder/product/">{item.product.name}</a> */}
                                             </td>
 
                                             {/* Price*/}
                                             <td class="product-price" data-title="Price">
                                               <span class="woocommerce-Price-amount amount"><bdi><span
-                                                class="woocommerce-Price-currencySymbol">$</span>{item.product.price.toFixed(2)}</bdi></span>
+                                                class="woocommerce-Price-currencySymbol">$</span>{product.price.toFixed(2)}</bdi></span>
                                             </td>
 
                                             {/* Amount */}
                                             <td class="product-quantity" data-title="Quantity">
                                               <div class="quantity">
                                                 <div className='AMT'>
-                                                  {item.quantity}
+                                                  {product.quantity}
                                                 </div>
                                               </div>
                                             </td>
@@ -270,6 +270,7 @@ const Cart = () => {
           </div>
         </div>
       </div>
+    </div>
     </div>
   )
 }

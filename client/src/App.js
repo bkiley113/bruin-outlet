@@ -15,9 +15,10 @@ import HomePage from "./pages/HomePage";
 import Cart from "./pages/Cart";
 import Item from "./pages/Item";
 import Results from "./pages/Results";
-import Wishlist from "./pages/Wishlist";
+import Wishlist from "./pages/Wishlist.js";
 import HeaderBar from "./components/HeaderBar";
 import PageFooter from "./components/PageFooter";
+import { AuthProvider } from './components/AuthContext.js';
 //import items from './data/items.json'
 
 
@@ -116,7 +117,7 @@ function App() {
         },
         {
           path: "/wishlist",
-          element: <Wishlist />,
+          element: <Wishlist itemsarr={items.products}/>,
         },
       ]
     },
@@ -131,11 +132,13 @@ function App() {
   ]);
 
   return (
-    <div className="app">
-      <div className="container">
-        <RouterProvider router={router}/>
+    <AuthProvider>
+      <div className="app">
+        <div className="container">
+          <RouterProvider router={router}/>
+        </div>
       </div>
-    </div>
+    </AuthProvider>
   );
 }
 
