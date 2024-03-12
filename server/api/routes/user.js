@@ -6,6 +6,7 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 import nodemailer from 'nodemailer';
 import jwt from 'jsonwebtoken';
+import { authenticator } from '../../middleware/authenticate.js';
 import { config } from 'dotenv';
 import { authenticator } from '../../middleware/authenticate.js';
 config();
@@ -85,12 +86,12 @@ router.post('/login', (req, res, next) => {
     });
 })
 
-//set up mailing through outlook
+//set up mailing through gmail
 let transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: "bruinoutlet@gmail.com",
-        pass: "vaer qjhk jfco nbwz "
+        user: `${process.env.AUTH_EMAIL}`,
+        pass: `${process.env.AUTH_PASS}`
     }
 });
 
@@ -98,7 +99,7 @@ transporter.verify((err, success) => {
     if (err) {
         console.log(err);
     } else {
-        console.log("SMTP Success");
+        console.log("SMTP Success: users");
         console.log(success);
     }
 })
@@ -238,6 +239,7 @@ router.get('/wishlist', authenticator, (req, res, next) => {
 
 
 //add a wishlist item
+router.post('/wishlist', authenticator, (req, res, next) =>{
 router.post('/wishlist', authenticator, (req, res, next) =>{
     //req format: {
     //"uid": "user id"
