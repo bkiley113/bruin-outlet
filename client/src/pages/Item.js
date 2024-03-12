@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import { useAuth } from "../components/AuthContext.js"
 import AuthWarning from '../components/warning.js';
 
-const Item = ({itemId, itemsarr, addToCart}) => {
+const Item = ({itemId, itemsarr}) => {
     const item = itemsarr.find(item => item._id === itemId);
     const [count, setCount] = useState(1);
     const { authToken, userId } = useAuth();
@@ -128,7 +128,6 @@ const Item = ({itemId, itemsarr, addToCart}) => {
     return (
     <div>
         <div className='itempage'>
-            <p>{count}</p>
         <div className='content'>
         <div className='mainimgcontainer'>
             <img src={`http://localhost:3001/${item.productImage}.png`} alt=''/>

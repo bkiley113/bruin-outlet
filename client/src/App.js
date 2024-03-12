@@ -23,7 +23,6 @@ import { AuthProvider } from './components/AuthContext.js';
 
 
 function App() {
-  const [cart, setCart] = useState([]);
   const [items, setItems] = useState({products: []});
 
   useEffect(() => {
@@ -59,24 +58,6 @@ function App() {
     }, [pathname]);
   };
 
-  const addToCart = (item) => {
-    setCart((currentCart) => {
-      // Check if the item is already in the cart
-      const isItemInCart = currentCart.some((cartItem) => cartItem.id === item.id);
-      if (!isItemInCart) {
-        // If not, add the item to the cart
-        return [...currentCart, item];
-      }
-      // Optionally, you could update the quantity here if the item is already in the cart
-      return currentCart; // If item is already in cart, just return the current state
-    });
-  };
-  
-  const removeFromCart = (itemId) => {
-    setCart(currentCart => currentCart.filter(item => item.id !== itemId));
-  };
-  
-
   const PageFormat = () => {
     useScrollToTop();
     return(
@@ -90,7 +71,13 @@ function App() {
   const ItemWrapper = () => {
     const { id } = useParams();
     const num = (id);
-    return <Item itemId={num} itemsarr={items.products} addToCart={addToCart}/>;
+    const item = items.products.find(product => product._id === id);
+
+    if (!item) {
+      // Return a placeholder or a loading spinner here
+      return <div>Loading...</div>;
+    }
+    return <Item itemId={num} itemsarr={items.products}/>;
   };
 
   const router = createBrowserRouter([
@@ -109,7 +96,7 @@ function App() {
         },
         {
           path: "/cart",
-          element:<Cart cart={cart} removeFromCart={removeFromCart}/>
+          element:<Cart />
         },
         {
           path: "/results",

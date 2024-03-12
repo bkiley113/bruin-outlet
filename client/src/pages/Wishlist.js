@@ -64,28 +64,33 @@ const Wishlist = ({itemsarr}) => {
     }
   };
 
+  const filteredItems = itemsarr.filter(item => wishlistIds.includes(item._id));
   return (
     <div>
       <h1 className="WL">Your Wishlist Items:</h1>
       <div className="wishlist-container">
-        <div className="gallery">
-          {itemsarr.filter(item => wishlistIds.includes(item._id)).map((item) => (
-            <div key={item._id} className="img">
-              <Link className='link' to={`/item/${item._id}`}>
-                <img className="gallery__item" src={`http://localhost:3001/${item.productImage}.png`} alt='' />
-              </Link>
-              <div className="imgbox">
+        {filteredItems.length > 0 ? (
+          <div className="gallery">
+            {filteredItems.map((item) => (
+              <div key={item._id} className="img">
                 <Link className='link' to={`/item/${item._id}`}>
-                  <div className="text">
-                    <h6>{item.name}</h6>
-                    <p>${item.price.toFixed(2)}</p>
-                  </div>
+                  <img className="gallery__item" src={`http://localhost:3001/${item.productImage}.png`} alt='' />
                 </Link>
-                <button className="rm" onClick={() => removeItem(item._id)}>REMOVE FROM WISHLIST</button>
+                <div className="imgbox">
+                  <Link className='link' to={`/item/${item._id}`}>
+                    <div className="text">
+                      <h6>{item.name}</h6>
+                      <p>${item.price.toFixed(2)}</p>
+                    </div>
+                  </Link>
+                  <button className="rm" onClick={() => removeItem(item._id)}>REMOVE FROM WISHLIST</button>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <h4>No items yet. Explore the store and find out what you like!</h4>
+        )}
       </div>
     </div>
   );

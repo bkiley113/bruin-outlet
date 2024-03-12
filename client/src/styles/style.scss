@@ -20,6 +20,7 @@
             display: flex;
             position: relative;
             top: 30px;
+            border-bottom: 2px solid black;
         }
         //searchbar
         .searchbar{
@@ -62,6 +63,9 @@
             align-items: center;
             justify-content: center;
             height: 100vh;
+            h2{
+                color: #FFC436;
+            }
         
             //title
             h1{
@@ -78,14 +82,68 @@
                 // top: 84px;
 
             }
+            .loginlogo{
+                margin-top: 70px;
+                position: relative;
+                display: flex;
+                width: 200px;
+                top: -20px;
+            }
+            .form_g {
+                margin-bottom: 15px;
+                input {
+                    width: 100%;
+                    padding: 10px ;
+                    border: none;
+                    border-bottom: 2px solid #ccc;
+                    background-color: transparent;
+                    /*
+                    border-radius: 5px;
+                    border: 1px solid #ccc; */
+                  }
+                  input:focus {
+                    outline: none;
+                    border-bottom-color: #FFC436;
+                  }
+                label{
+                    color: black;
+                }
+              }
+              .form_g_r {
+                margin-bottom: 5px;
+                input {
+                    width: 100%;
+                    padding: 10px ;
+                    border: none;
+                    border-bottom: 2px solid #ccc;
+                    background-color: transparent;
+                    /*
+                    border-radius: 5px;
+                    border: 1px solid #ccc; */
+                  }
+                  input:focus {
+                    outline: none;
+                    border-bottom-color: #FFC436;
+                  }
+                label{
+                    color: black;
+                }
+              }
 
             //center box
             form{
                 display: flex;
                 flex-direction: column;
-                padding: 50px;
-                background-color: #0174BE;
-                width: 200px;
+                // padding: 50px;
+                // background-color: #0174BE;
+                // width: 200px;
+                padding: 20px;
+                margin-top: 10px;
+                margin-bottom: 20px;
+                border-radius: 8px;
+                //background-color: #0174BE;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                width: 300px;
                 gap: 20px;
 
                 //input boxes
@@ -170,7 +228,7 @@
                             align-items: center;
                             justify-content: center;
                             right:43.5px; 
-                            top: -29px;
+                            top: -28.5px;
                             font-size: 10px;
                             .dropdownmenu{
                                 height: 0px;
@@ -205,8 +263,11 @@
                 //account name as well is logout/login button
                 span{
                     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                    font-style: italic;
+                    font-size: 15px;
+                    padding-left: 10px;
                     cursor: pointer;
-
+                    color:#0174BE;
                     &:hover{
                         text-decoration: underline;
                     }
@@ -358,6 +419,13 @@
                 border:none;
                 padding: 5px;
                 margin-top:10px;
+                font-weight: bold;
+            }
+            h4{
+                position: relative;
+                margin-top:100px;
+                font-size: 20px;
+                font-style: italic;
                 font-weight: bold;
             }
             button.rm{

@@ -7,7 +7,6 @@ const Cart = () => {
 
   const [products, setProducts] = useState([]);
   const { authToken, userId } = useAuth();
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (!authToken) {

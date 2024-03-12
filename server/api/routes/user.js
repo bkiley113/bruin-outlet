@@ -25,7 +25,7 @@ router.post('/signup', (req, res, next) => {
         }
         else {
             //encrypt the password and salt it 10 times
-            userId = new mongoose.Types.ObjectId();
+            const userId = new mongoose.Types.ObjectId();
             bcrypt.hash(req.body.password, 10, (err, hashpass) => {
                 if (err) {
                     return res.status(500).json({
