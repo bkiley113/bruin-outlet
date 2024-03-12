@@ -1,16 +1,25 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import img from "C:/Users/tmdgj/UCLA/cs35L/project/web-app/client/src/images/demologo.png"
 
 const Otp = () => {
     return (
         <div className = 'authenticate'>
-            <Link to='/'><div className='bar'>Bar goes here, should be able to get back to homepage</div></Link>
-            <h2></h2>
-            <h1>One Time Password</h1>
-            <form>
-                <input type ="text" placeholder='OTP'/>
-                <button>Submit</button>
-            </form>
+            <Link to='/'>
+                <a >
+                    <img className="loginlogo" src={img} />
+                </a>
+            </Link>            <h2></h2>
+            <div className= "auth-container">
+                <form>
+                    <h2>OTP</h2>  
+                    <div className='form_g_o'>
+                        <input type ="text" placeholder='One Time Password'/>
+                    </div>
+                    
+                    <button>Submit</button>
+                </form>
+            </div>
         </div>
     )
 }

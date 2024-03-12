@@ -126,6 +126,26 @@
                     color: black;
                 }
               }
+              .form_g_o {
+                margin-bottom: 20px;
+                input {
+                    width: 100%;
+                    padding: 10px ;
+                    border: none;
+                    border-bottom: 2px solid #ccc;
+                    background-color: transparent;
+                    /*
+                    border-radius: 5px;
+                    border: 1px solid #ccc; */
+                  }
+                  input:focus {
+                    outline: none;
+                    border-bottom-color: #FFC436;
+                  }
+                label{
+                    color: black;
+                }
+              }
             //center box
             form{
                 display: flex;

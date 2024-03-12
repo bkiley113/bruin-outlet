@@ -17,6 +17,7 @@ import Item from "./pages/Item";
 import HeaderBar from "./components/HeaderBar";
 import PageFooter from "./components/PageFooter";
 import items from './data/items.json'
+import Otp from "./pages/Otp"
 
 
 function App() {
@@ -109,6 +110,10 @@ function App() {
       path: "/makeaccount",
       element: <MakeAccount />,
     },
+    {
+      path:"/otp",
+      element: <Otp />
+    }
   ]);
 
   return (
