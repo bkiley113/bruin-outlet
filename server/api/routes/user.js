@@ -8,7 +8,6 @@ import nodemailer from 'nodemailer';
 import jwt from 'jsonwebtoken';
 import { authenticator } from '../../middleware/authenticate.js';
 import { config } from 'dotenv';
-import { authenticator } from '../../middleware/authenticate.js';
 config();
 
 import { userModel } from '../models/user.js';
@@ -240,7 +239,6 @@ router.get('/wishlist', authenticator, (req, res, next) => {
 
 //add a wishlist item
 router.post('/wishlist', authenticator, (req, res, next) =>{
-router.post('/wishlist', authenticator, (req, res, next) =>{
     //req format: {
     //"uid": "user id"
     //"pid": "product id" }
@@ -313,4 +311,4 @@ router.delete('/wishlist', authenticator, (req, res, next) => {
 });
 
 const routerUser = router;
-export { routerUser };
+export {routerUser};

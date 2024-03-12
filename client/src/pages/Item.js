@@ -56,6 +56,7 @@ const Item = ({itemId, itemsarr}) => {
             return;
         }
         try {
+            //const url = `http://localhost:3001/user/wishlist?_id=${userId}`;
             const response = await fetch('http://localhost:3001/user/wishlist', {
                 method: 'POST',
                 headers: {
