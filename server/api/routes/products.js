@@ -3,7 +3,7 @@ const router = express.Router();
 import { productModel } from '../models/product.js';
 const Product = productModel;
 import mongoose from 'mongoose';
-import { authentication } from '../../middleware/authenticate.js';
+import { authenticator } from '../../middleware/authenticate.js';
 
 //get all products
 router.get('/', (req, res, next) => {
