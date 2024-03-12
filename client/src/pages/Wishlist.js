@@ -3,7 +3,11 @@ import { Link } from 'react-router-dom'
 
 const Results = () => {
     return (
-        <div>Wishlist!</div>
+        <div className='wishlist'>
+            <div className='title'>
+                wishlist!
+            </div>
+        </div>
     )
 }
 

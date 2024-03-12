@@ -572,5 +572,13 @@
                 font-weight: bold;
             }
         }
+        .wishlist{
+            justify-content: center;
+            align-items: center;
+            .title{
+                position: relative;
+                color:red;
+            }
+        }
     }
 }

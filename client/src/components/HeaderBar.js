@@ -25,7 +25,9 @@ const HeaderBar = () => {
                     <Link className="link" to="/?cat=stationery">
                         <h6>STATIONERY</h6>
                     </Link>
-                    <span>Account name </span>
+                    <Link className="link" to="/wishlist">
+                        <span>Wishlist</span>
+                    </Link>
                     <span>
                         <Link className="link" to="/login">
                             Login
