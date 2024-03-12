@@ -3,6 +3,7 @@
     justify-content: center;
     .container{
         width: 1024px;
+        margin-top: 20px;
         .banner{
             display: flex;
             position: relative;
@@ -11,6 +12,15 @@
         .link{
             text-decoration: none;
             color: inherit;
+        }
+        .WL{
+            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-style: italic;
+            font-weight: bold;
+            display: flex;
+            position: relative;
+            top: 30px;
+            border-bottom: 2px solid black;
         }
         //searchbar
         .searchbar{
@@ -35,7 +45,8 @@
             font-size: 17px;
             position: relative;
             top: -22.5px;
-            left: 945px;
+            left: 896px;
+            width: 95px;
             padding: 14px;
             border-color: #0C356A;
             cursor: pointer;
@@ -47,7 +58,6 @@
         }
         //login and register stuff
         .authenticate{
-            
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -56,8 +66,8 @@
             h2{
                 color: #FFC436;
             }
+        
             //title
-            /*
             h1{
                 text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
                 background-color: #0174BE;
@@ -72,21 +82,14 @@
                 // top: 84px;
 
             }
-            */
             .loginlogo{
-                margin-top: 10px;
+                margin-top: 70px;
                 position: relative;
                 display: flex;
                 width: 200px;
-                margin-bottom: -100px;
+                top: -20px;
             }
-            .auth-container {
-                display: flex; 
-                justify-content: center;
-                align-items: center;
-                height: 100vh;
-              }
-              .form_g {
+            .form_g {
                 margin-bottom: 15px;
                 input {
                     width: 100%;
@@ -126,31 +129,17 @@
                     color: black;
                 }
               }
-              .form_g_o {
-                margin-bottom: 20px;
-                input {
-                    width: 100%;
-                    padding: 10px ;
-                    border: none;
-                    border-bottom: 2px solid #ccc;
-                    background-color: transparent;
-                    /*
-                    border-radius: 5px;
-                    border: 1px solid #ccc; */
-                  }
-                  input:focus {
-                    outline: none;
-                    border-bottom-color: #FFC436;
-                  }
-                label{
-                    color: black;
-                }
-              }
+
             //center box
             form{
                 display: flex;
                 flex-direction: column;
+                // padding: 50px;
+                // background-color: #0174BE;
+                // width: 200px;
                 padding: 20px;
+                margin-top: 10px;
+                margin-bottom: 20px;
                 border-radius: 8px;
                 //background-color: #0174BE;
                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -239,7 +228,7 @@
                             align-items: center;
                             justify-content: center;
                             right:43.5px; 
-                            top: -66px;
+                            top: -28.5px;
                             font-size: 10px;
                             .dropdownmenu{
                                 height: 0px;
@@ -257,7 +246,6 @@
                                     position: relative;
                                     font-size: 16px;
                                     padding:14px;
-                                    top: -36px;
                                     background-color: white;
                                     transition: all linear 0.3s;
                                     &:hover{
@@ -275,8 +263,11 @@
                 //account name as well is logout/login button
                 span{
                     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                    font-style: italic;
+                    font-size: 15px;
+                    padding-left: 10px;
                     cursor: pointer;
-
+                    color:#0174BE;
                     &:hover{
                         text-decoration: underline;
                     }
@@ -320,81 +311,223 @@
             align-items: center;
             justify-content: space-between;
             img{
-                height: 50px;
+                width:100px;
             }
         }
-        .gallery{
-            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin-top: 50px;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-            grid-gap: 30px;
-            row-gap: 50px;
-            .img{
+        .gallery-container{
+            display: flex;
+            position: relative;
+            right: -45px;
+            h3{
+                font-style: italic;
+                border-bottom: 2px solid black;
+                display: flex;
                 position: relative;
-                .imgbox{
-                    display: flex;
-                    flex-direction: column;
-                    width: 80%;
+                top: 80px;
+                right: -210px;
+            }
+            .gallery{
+                align-items: center;
+                justify-content: center;
+                font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                margin-top: 50px;
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                grid-gap: 30px;
+                row-gap: 50px;
+                .img{
                     position: relative;
-                    top: 20px;
-                    background-color: white;
-                    border: 2px solid #0C356A;
-                    text-align: center;
-                    .text{
-                        h6{
-                            margin: 5px;
-                            top: 10px;
-                            font-size: 16px;
-                            position: relative;
+                    .imgbox{
+                        display: flex;
+                        flex-direction: column;
+                        width: 75%;
+                        position: relative;
+                        top: 20px;
+                        background-color: white;
+                        border: 2px solid #0C356A;
+                        text-align: center;
+                        .text{
+                            h6{
+                                margin: 5px;
+                                top: 10px;
+                                font-size: 16px;
+                                position: relative;
+                                font-style: italic;
+                                font-weight: bold;
+                            }
+                            p{
+                                position: relative;
+                                font-style: italic;
+                                padding-bottom:10px;
+                            }
                         }
-                        p{
-                            position: relative;
-                        }
-                    }
 
+                        &::after{
+                            content: "";
+                            width: 100%;
+                            height: 100%;
+                            object-fit: cover;
+                            position: absolute;
+                            top: 20px;
+                            left: -20px;
+                            background-color: #0C356A;
+                            z-index: -1;
+        
+                        }
+
+                    }
                     &::after{
                         content: "";
-                        width: 100%;
-                        height: 100%;
+                        width: 80%;
+                        height: 75%;
+                        // width: 60%;
+                        // height:60%;
                         object-fit: cover;
                         position: absolute;
                         top: 20px;
                         left: -20px;
                         background-color: #0C356A;
                         z-index: -1;
-    
+
                     }
-
-                }
-                &::after{
-                    content: "";
-                    width: 80%;
-                    height: 60%;
-                    // width: 60%;
-                    // height:60%;
-                    object-fit: cover;
-                    position: absolute;
-                    top: 20px;
-                    left: -20px;
-                    background-color: #0C356A;
-                    z-index: -1;
-
-                }
-                .gallery__item{
-                    margin-top:3px;
-                    width: 75%;
-                    height: 65%;
+                    .gallery__item{
+                        margin-top:3px;
+                        width: 75%;
+                        height: 65%;
+                        
+                        object-fit: cover;
+                        border: 2px solid #0C356A;
+                        background-color: white;
+                        transition: transform 0.2s ease-in-out;
+                        &:hover{
+                            transform: scale(1.05);
+                        }
+                    }
                     
-                    object-fit: cover;
-                    border: 2px solid #0C356A;
-                    background-color: white;
-                    transition: transform 0.2s ease-in-out;
-                    &:hover{
-                        transform: scale(1.05);
-                    }
                 }
-                
+            }
+        }
+        .wishlist-container{
+            justify-content: center;
+            display: flex;
+            position: relative;
+            right: -45px;
+            button.place{
+                color: black;
+                font-style: italic;
+                background-color: #83a0e0;
+                border:none;
+                padding: 5px;
+                margin-top:10px;
+                font-weight: bold;
+            }
+            h4{
+                position: relative;
+                margin-top:100px;
+                font-size: 20px;
+                font-style: italic;
+                font-weight: bold;
+            }
+            button.rm{
+                color:white;
+                background-color: red;
+                font-style: italic;
+                font-weight: bold;
+                border:none;
+                padding: 5px;
+                margin-top:10px;
+                &:hover{
+                    color:red;
+                    background-color: white;
+                }
+            }
+            h3{
+                font-style: italic;
+                border-bottom: 2px solid black;
+                display: flex;
+                position: relative;
+                top: 80px;
+                right: -210px;
+            }
+            .gallery{
+                align-items: center;
+                justify-content: center;
+                font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                margin-top: 50px;
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+                grid-gap: 30px;
+                row-gap: 50px;
+                .img{
+                    position: relative;
+                    .imgbox{
+                        display: flex;
+                        flex-direction: column;
+                        width: 75%;
+                        position: relative;
+                        top: 20px;
+                        background-color: white;
+                        border: 2px solid #0C356A;
+                        text-align: center;
+                        .text{
+                            h6{
+                                margin: 5px;
+                                top: 10px;
+                                font-size: 16px;
+                                position: relative;
+                                font-style: italic;
+                                font-weight: bold;
+                            }
+                            p{
+                                position: relative;
+                                font-style: italic;
+                                padding-bottom:10px;
+                            }
+                        }
+
+                        &::after{
+                            content: "";
+                            width: 100%;
+                            height: 100%;
+                            object-fit: cover;
+                            position: absolute;
+                            top: 20px;
+                            left: -20px;
+                            background-color: #0C356A;
+                            z-index: -1;
+        
+                        }
+
+                    }
+                    &::after{
+                        content: "";
+                        width: 75%;
+                        height: 65%;
+                        // width: 60%;
+                        // height:60%;
+                        object-fit: cover;
+                        position: absolute;
+                        top: 20px;
+                        left: -20px;
+                        background-color: #0C356A;
+                        z-index: -1;
+
+                    }
+                    .gallery__item{
+                        margin-top:3px;
+                        width: 75%;
+                        height: 65%;
+                        
+                        object-fit: cover;
+                        border: 2px solid #0C356A;
+                        background-color: white;
+                        transition: transform 0.2s ease-in-out;
+                        &:hover{
+                            transform: scale(1.05);
+                        }
+                    }
+                    
+                }
             }
         }
         .itempage{
@@ -442,6 +575,7 @@
                 p{
                     text-align: justify;
                     line-height: 30px;
+                    font-size: 18px;
                 }
             }
             .sidebar{
@@ -621,6 +755,22 @@
 
             }
 
+        }
+        .results{
+            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            h1{
+                padding-top:20px;
+                font-style: italic;
+                font-weight: bold;
+            }
+        }
+        .wishlist{
+            justify-content: center;
+            align-items: center;
+            .title{
+                position: relative;
+                color:red;
+            }
         }
     }
 }
