@@ -7323,7 +7323,7 @@ p.demo_store a {
     text-align: center;
     line-height: 1;
     border-radius: 100%;
-    color: red !important;
+    color: white !important;
     text-decoration: none;
     font-weight: 700;
     border: 0
@@ -7331,7 +7331,6 @@ p.demo_store a {
 
 .woocommerce a.remove:hover {
     color: #fff !important;
-    background: red
 }
 
 .woocommerce small.note {

@@ -1,28 +1,41 @@
 import React from 'react'
-import Sidebar from '../components/Sidebar'
 
-const items = [
+const orders = [
   {
-    sku: 1,
-    title: "UCLA MENS HOODIE",
-    desc: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. A possimus excepturi aliquid nihil cumque ipsam facere aperiam at! Ea dolorem ratione sit debitis deserunt repellendus numquam ab vel perspiciatis corporis!",
-    img: "https://cdn.shoplightspeed.com/shops/616371/files/53697154/800x800x3/russell-athletic-ucla-joe-bear-bruins-pullover-hoo.jpg",
-    cat: "Men",
-    price: 79.99,
-    incart: true,
+      "product": {
+          "_id": "65eea8e74690f92f355a8807",
+          "name": "UCLA Men's Hoodie",
+          "price": 65,
+          "productImage": "uploads/65eea8e74690f92f355a8807",
+          "description": "Cozy and warm hoodie with the UCLA logo, perfect for showing school spirit during chilly evenings.",
+          "category": "men clothes",
+          "__v": 0
+      },
+      "quantity": 1,
+      "request": {
+          "type": "GET",
+          "url": "http://localhost:3001/orders/65eec69d4690f92f355a8849"
+      }
   },
   {
-    sku: 1,
-    title: "UCLA BALLS",
-    desc: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. A possimus excepturi aliquid nihil cumque ipsam facere aperiam at! Ea dolorem ratione sit debitis deserunt repellendus numquam ab vel perspiciatis corporis!",
-    img: "https://cdn.shoplightspeed.com/shops/616371/files/53697154/800x800x3/russell-athletic-ucla-joe-bear-bruins-pullover-hoo.jpg",
-    cat: "Men",
-    price: 999.99,
-    incart: true,
-  },
-];
+      "product": {
+          "_id": "65eea91d4690f92f355a880d",
+          "name": "UCLA Leather Backpack",
+          "price": 120,
+          "productImage": "uploads/65eea91d4690f92f355a880d",
+          "description": "Durable leather backpack embossed with the UCLA logo, combining functionality with Bruins pride.",
+          "category": "accessory",
+          "__v": 0
+      },
+      "quantity": 1,
+      "request": {
+          "type": "GET",
+          "url": "http://localhost:3001/orders/65ef6287a32628f27968e6d8"
+      }
+  }
+]
 
-const subtotal = items.reduce((sum, item) => sum + item.price, 0);
+const subtotal = orders.reduce((sum, order) => sum + (order.product.price * order.quantity), 0);
 const total = (subtotal + (0.0925 * subtotal)).toFixed(2);
 
 const Cart = () => {
@@ -159,7 +172,7 @@ const Cart = () => {
                                       </thead>
                                       <tbody>
 
-                                        {items.map(item => (
+                                        {orders.map(item => (
                                           /* Chosen Itemization Row */
                                           <tr class="woocommerce-cart-form__cart-item cart_item">
                                             {/* Remove Product Button */}
@@ -171,29 +184,31 @@ const Cart = () => {
 
                                             {/* Image */}
                                             <td class="product-thumbnail">
-                                              <a href="placeholder/product/animal-pillow/"><img fetchpriority="high"
+                                            <a><img fetchpriority="high"
+                                              /* <a href={`/item/${item.product._id}`}><img fetchpriority="high" */
                                                 decoding="async" width="300" height="300"
-                                                src={item.img}
+                                                src={`http://localhost:3001/${item.product.productImage}.png`}
                                                 class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail"
                                                 alt="" /></a>
                                             </td>
 
                                             {/* Name */}
                                             <td class="product-name" data-title="Product">
-                                              <a href="placeholder/product/">{item.title}</a>
+                                            <a>{item.product.name}</a>
+                                              {/* <a href="placeholder/product/">{item.product.name}</a> */}
                                             </td>
 
                                             {/* Price*/}
                                             <td class="product-price" data-title="Price">
                                               <span class="woocommerce-Price-amount amount"><bdi><span
-                                                class="woocommerce-Price-currencySymbol">$</span>{item.price}</bdi></span>
+                                                class="woocommerce-Price-currencySymbol">$</span>{item.product.price.toFixed(2)}</bdi></span>
                                             </td>
 
                                             {/* Amount */}
                                             <td class="product-quantity" data-title="Quantity">
                                               <div class="quantity">
                                                 <div className='AMT'>
-                                                  numero
+                                                  {item.quantity}
                                                 </div>
                                               </div>
                                             </td>
@@ -219,18 +234,18 @@ const Cart = () => {
                             class="et_pb_with_border et_pb_module et_pb_wc_cart_totals et_pb_wc_cart_totals_0 woocommerce-cart et_pb_woo_custom_button_icon">
                             <div class="et_pb_module_inner">
                               <div class="cart_totals">
-                                <h2>Cart totals</h2>
+                                <h2>Order totals</h2>
                                 <table cellspacing="0" class="shop_table shop_table_responsive">
                                   <tbody>
                                     <tr class="cart-subtotal">
                                       <th>Subtotal</th>
                                       <td data-title="Subtotal">
                                         <span class="woocommerce-Price-amount amount"><bdi><span
-                                          class="woocommerce-Price-currencySymbol">$</span>{subtotal}</bdi></span>
+                                          class="woocommerce-Price-currencySymbol">$</span>{subtotal.toFixed(2)}</bdi></span>
                                       </td>
                                     </tr>
                                     <tr class="order-total">
-                                      <th>Total</th>
+                                      <th>Total (+9.25% tax)</th>
                                       <td data-title="Total">
                                         <strong><span class="woocommerce-Price-amount amount"><bdi><span
                                           class="woocommerce-Price-currencySymbol">$</span>{total}</bdi></span></strong>
@@ -239,8 +254,8 @@ const Cart = () => {
                                   </tbody>
                                 </table>
                                 <div class="wc-proceed-to-checkout">
-                                  <a href="placeholder/checkout/" class="checkout-button button alt wc-forward">
-                                    Proceed to checkout</a>
+                                  <a href="/" class="checkout-button button alt wc-forward">
+                                    Continue shopping</a>
                                 </div>
                               </div>
                             </div>
