@@ -1,39 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import search_icon from "../images/search_icon.png"
 
-class SearchBar extends React.Component{
-    state = {userinput:''};
+const SearchBar = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const navigate = useNavigate();
 
-    searchbarsearch=(event)=>{
-        event.preventDefault();
-        
-        this.props.run(this.state.userinput);
-    };
+  const handleSearch = (event) => {
+    event.preventDefault();
+    navigate(`/results?query=${encodeURIComponent(searchTerm)}`);
+    setSearchTerm('');
+  };
 
-    render()
-         
-    {
-        return (
-            <div>
-                <form onSubmit={this.searchbarsearch}>
-                <div>
-                    <input type='text' placeholder='Search for products . . .'
-                    onChange={e=>this.setState({userinput : e.target.value})}
-                    value = {this.state.userinput}
-                    className='searchbar'
-                    />
-                 </div>
-                 <img 
-                    src={search_icon}
-                    alt=''
-                    className='search_icon'
-                />
-                <button class="go_button">
-                    GO
-                </button>
-                </form>
-            </div>
-        )
-    }
-}
+  return (
+    <div>
+      <form onSubmit={handleSearch}>
+        <div>
+          <input
+            type='text'
+            placeholder='Enter product name here . . .'
+            onChange={(e) => setSearchTerm(e.target.value)}
+            value={searchTerm}
+            className='searchbar'
+          />
+        </div>
+        <img 
+          src={search_icon}
+          alt='Search'
+          className='search_icon'
+        />
+        <button className="go_button">
+          GO
+        </button>
+      </form>
+    </div>
+  );
+};
+
 export default SearchBar;

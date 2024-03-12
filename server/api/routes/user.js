@@ -6,6 +6,7 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 import nodemailer from 'nodemailer';
 import jwt from 'jsonwebtoken';
+import { authenticator } from '../../middleware/authenticate.js';
 import { config } from 'dotenv';
 config();
 
@@ -13,12 +14,18 @@ import { userModel } from '../models/user.js';
 const User = userModel;
 
 router.post('/signup', (req, res, next) => {
+    /*request format:
+    {
+        email: testemail@123.com,
+        password: pass123
+    }*/
     User.find({email: req.body.email}).exec().then(user => {
         if (user.length > 0) {
             return res.status(409).json({message:'Email already registered!'});
         }
         else {
             //encrypt the password and salt it 10 times
+            const userId = new mongoose.Types.ObjectId();
             bcrypt.hash(req.body.password, 10, (err, hashpass) => {
                 if (err) {
                     return res.status(500).json({
@@ -26,16 +33,15 @@ router.post('/signup', (req, res, next) => {
                     });
                 } else {
                     const user = new User({
-                        _id: new mongoose.Types.ObjectId(),
+                        _id: userId,
                         email: req.body.email,
                         password: hashpass,
-                        verified: false,
                         wishlist: []
                 });
-                user.save().then(result=> {//verify acc
-                    sendOTPEmail(result, res);
+                user.save().then(result=> {
                     res.status(201).json({
-                        message: 'User created!'
+                        message: 'User created!',
+                        id: userId
                     })
                 }).catch(err=> {
                     res.status(500).json({error: err});
@@ -61,16 +67,12 @@ router.post('/login', (req, res, next) => {
                 });
             }
             if (doesMatch) {
-                sendOTPEmail({_id:user[0]._id, email:user[0].email}, res);
-                const userToken = jwt.sign({
-                    email: user[0].email,
-                    userId: user[0]._id
-                }, process.env.JWT_KEY, {
-                    expiresIn: "1h"
-                });
+                //send one time password
+                sendOTPEmail({id:user[0]._id, email:user[0].email}, res);
+                //return status 200, frontend should check this then call /verifyotp
                 return res.status(200).json({
                     message: 'Auth successful!',
-                    token: userToken
+                    userId: user[0]._id
                 });
             }
             //if no error but no match, 
@@ -83,12 +85,12 @@ router.post('/login', (req, res, next) => {
     });
 })
 
-//set up mailing through outlook
+//set up mailing through gmail
 let transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: "bruinoutlet@gmail.com",
-        pass: "vaer qjhk jfco nbwz "
+        user: `${process.env.AUTH_EMAIL}`,
+        pass: `${process.env.AUTH_PASS}`
     }
 });
 
@@ -96,13 +98,13 @@ transporter.verify((err, success) => {
     if (err) {
         console.log(err);
     } else {
-        console.log("SMTP Success");
+        console.log("SMTP Success: users");
         console.log(success);
     }
 })
 
 
-const sendOTPEmail = async ({_id, email}, res) => {
+const sendOTPEmail = async ({id, email}, res) => {
     try {
         //create an OTP from 1000 to 9999
         const otp = `${Math.floor(Math.random() * 9000 + 1000)}`;
@@ -118,12 +120,16 @@ const sendOTPEmail = async ({_id, email}, res) => {
         //same security as our hashed passwords, salt 10 times
         const secureOtp = await bcrypt.hash(otp, 10);
         const newOTPVerification = await new twofa({
-            userId: _id,
+            _id: new mongoose.Types.ObjectId(),
+            userId: id,
             otp: secureOtp,
             createdAt: Date.now(),
             //600000 ms = 10 mins
             expiresAt: Date.now() + 600000
         });
+        let existingOTP = await twofa.find({userId: id});
+        if (existingOTP.length > 0)
+            await twofa.deleteMany({userId: id});
         await newOTPVerification.save();
         await transporter.sendMail(mailOptions);
        console.log("OTP Email sent.");
@@ -133,9 +139,14 @@ const sendOTPEmail = async ({_id, email}, res) => {
 }
 
 router.post("/verifyOTP", async (req, res) => {
+    /*Reqeust format:
+    {
+        userId: 3231a..
+        otp: 1111
+    }*/
     try {
-
-        let { userId, otp } = req.body;
+        let userId = req.body.userId;
+        let otp = req.body.otp;
         let userVerification;
         //make sure otp is entered
         if (!userId || !otp) {
@@ -144,27 +155,34 @@ router.post("/verifyOTP", async (req, res) => {
             let user = await twofa.find({userId});
             userVerification = user;
         }
-       
             if (userVerification.length > 0) {
-            const { expiresAt } = userVerification[0];
+            const expiresAt = userVerification[0].expiresAt;
             const secureOTP = userVerification[0].otp;
-            
+            console.log(secureOTP);
+            console.log(otp);
             //check that OTP has not expired
-   
             if (expiresAt < Date.now()) {
+                console.log("test");
                 await userVerification.deleteMany({userId});
                 throw new Error("Code has expired.")
             } else {
                 console.log('here');
                 //verify that the code is correct
                 const correctOTP = await bcrypt.compare(otp, secureOTP)
+                console.log(correctOTP);
                 if (correctOTP) {
-
                     //set user to verified by searching w userid
-                    User.updateOne({_id: userId}, {verified: true});
+                    const user = await User.find({_id: req.body.userId});
+                    const userToken = jwt.sign({
+                        email: user[0].email,
+                        userId: user[0].id
+                    }, process.env.JWT_KEY, {
+                        expiresIn: "1h"
+                    });
                     OTPVerification.deleteMany({ userId });
                     res.json({
-                        message: "Verified!"
+                        message: "Verified!",
+                        token: userToken
                     });
                 } else {
                     throw new Error("Wrong OTP code.");
@@ -183,9 +201,26 @@ router.post("/verifyOTP", async (req, res) => {
     }
 });
 //get all wishlist items
-router.get('/wishlist', (req, res, next) => {
-    //req format: "userId: _id"
-    let userId = req.body._id;
+// router.get('/wishlist', authenticator, (req, res, next) => {
+//     //req format: "userId: _id"
+//     let userId = req.body._id;
+//     User.findOne({_id: userId}).exec().then(user => {
+//         const wishlist = user.wishlist;
+//         res.status(200).json({
+//             _id: userId,
+//             wishlist
+//         });
+//     })
+//     .catch(err => {
+//         res.status(500).json({
+//             error: err
+//         })
+//     });
+// });
+
+router.get('/wishlist', authenticator, (req, res, next) => {
+    // Accessing userId from query parameters
+    let userId = req.query._id;
     User.findOne({_id: userId}).exec().then(user => {
         const wishlist = user.wishlist;
         res.status(200).json({
@@ -196,12 +231,14 @@ router.get('/wishlist', (req, res, next) => {
     .catch(err => {
         res.status(500).json({
             error: err
-        })
+        });
     });
 });
 
+
+
 //add a wishlist item
-router.post('/wishlist', (req, res, next) =>{
+router.post('/wishlist', authenticator, (req, res, next) =>{
     //req format: {
     //"uid": "user id"
     //"pid": "product id" }
@@ -220,27 +257,58 @@ router.post('/wishlist', (req, res, next) =>{
 })
 
 //delete a wishlist item
-router.delete('/wishlist', (req, res, next) =>{
-    //req format: {
-    //"uid": "user id"
-    //"pid": "product id" }
-    let userId = req.body.uid;
-    let productId = req.body.pid;
-    User.updateOne({_id: userId}, {$pull: { wishlist: productId}}).exec().then(result => {
+// router.delete('/wishlist', (req, res, next) =>{
+//     //req format: {
+//     //"uid": "user id"
+//     //"pid": "product id" }
+//     let userId = req.body.uid;
+//     let productId = req.body.pid;
+//     User.updateOne({_id: userId}, {$pull: { wishlist: productId}}).exec().then(result => {
+//         if (result.modifiedCount === 0) {
+//             res.status(404).json({
+//                 message: `Product ID ${productId} is not in wishlist!`
+//             })
+//         } else {
+//         res.status(200).json({
+//             message: `Product ID ${productId} removed from wishlist.`
+//         })};
+//     }).catch(err => {
+//         res.status(500).json({
+//             error: err
+//         });
+//     });
+// })
+
+router.delete('/wishlist', authenticator, (req, res, next) => {
+    // Extracting uid and pid from query parameters
+    const userId = req.query.uid;
+    const productId = req.query.pid;
+
+    if (!userId || !productId) {
+        return res.status(400).json({
+            message: "Missing user ID or product ID."
+        });
+    }
+
+    User.updateOne({_id: userId}, {$pull: { wishlist: productId }})
+    .exec()
+    .then(result => {
         if (result.modifiedCount === 0) {
             res.status(404).json({
-                message: `Product ID ${productId} is not in wishlist!`
-            })
+                message: `Product ID ${productId} is not in the wishlist or invalid user ID.`
+            });
         } else {
-        res.status(200).json({
-            message: `Product ID ${productId} removed from wishlist.`
-        })};
-    }).catch(err => {
+            res.status(200).json({
+                message: `Product ID ${productId} removed from wishlist.`
+            });
+        }
+    })
+    .catch(err => {
         res.status(500).json({
             error: err
         });
     });
-})
+});
 
 const routerUser = router;
-export { routerUser };
+export {routerUser};

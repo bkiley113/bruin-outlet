@@ -3,7 +3,7 @@ import { config } from 'dotenv';
 config();
 
 
-const authentication = (req, res, next) => {
+const authenticator = (req, res, next) => {
     try {
         //get token from header, split the "BEARER "
         const token = req.headers.authorization.split(" ")[1];
@@ -18,4 +18,4 @@ const authentication = (req, res, next) => {
         
 }
 
-export { authentication };
+export { authenticator };

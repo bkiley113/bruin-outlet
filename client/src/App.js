@@ -14,30 +14,42 @@ import MakeAccount from "./pages/MakeAccount";
 import HomePage from "./pages/HomePage";
 import Cart from "./pages/Cart";
 import Item from "./pages/Item";
+import Results from "./pages/Results";
+import Wishlist from "./pages/Wishlist.js";
 import HeaderBar from "./components/HeaderBar";
 import PageFooter from "./components/PageFooter";
-import items from './data/items.json'
-import Otp from "./pages/Otp"
+import { AuthProvider } from './components/AuthContext.js';
+//import items from './data/items.json'
 
 
 function App() {
-  // const[items, setItems] = useState([]);
-  // useEffect(() => {
-  //   fetch('http://localhost:3001/products')
-  //     .then(response => {
-  //       if (!response.ok) {
-  //         throw new Error('Network response was not ok');
-  //       }
-  //       return response.json();
-  //     })
-  //     .then(data => {
-  //       setItems(data);
-  //     })
-  //     .catch(error => {
-  //       console.error("Failed to fetch products:", error);
-  //     });
-  // }, []);
+  const [items, setItems] = useState({products: []});
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const url = 'http://localhost:3001/products';
+      const options = {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      };
+
+      try {
+        const response = await fetch(url, options);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        setItems(data); // Now 'fetched' stores the entire object including 'products'
+      } catch (error) {
+        console.error('Could not fetch the data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+  
   const useScrollToTop = () => {
     const { pathname } = useLocation();
   
@@ -45,26 +57,6 @@ function App() {
       window.scrollTo(0, 0);
     }, [pathname]);
   };
-
-  const [cart, setCart] = useState([]);
-
-  const addToCart = (item) => {
-    setCart((currentCart) => {
-      // Check if the item is already in the cart
-      const isItemInCart = currentCart.some((cartItem) => cartItem.id === item.id);
-      if (!isItemInCart) {
-        // If not, add the item to the cart
-        return [...currentCart, item];
-      }
-      // Optionally, you could update the quantity here if the item is already in the cart
-      return currentCart; // If item is already in cart, just return the current state
-    });
-  };
-  
-  const removeFromCart = (itemId) => {
-    setCart(currentCart => currentCart.filter(item => item.id !== itemId));
-  };
-  
 
   const PageFormat = () => {
     useScrollToTop();
@@ -78,8 +70,14 @@ function App() {
   };
   const ItemWrapper = () => {
     const { id } = useParams();
-    const num = Number(id);
-    return <Item itemId={num} itemsarr={items} addToCart={addToCart}/>;
+    const num = (id);
+    const item = items.products.find(product => product._id === id);
+
+    if (!item) {
+      // Return a placeholder or a loading spinner here
+      return <div>Loading...</div>;
+    }
+    return <Item itemId={num} itemsarr={items.products}/>;
   };
 
   const router = createBrowserRouter([
@@ -89,7 +87,7 @@ function App() {
       children:[
         {
           path: "/",
-          element:<HomePage itemsarr={items}/>
+          element:<HomePage itemsarr={items.products}/>
         },
         {
           path: "/item/:id",
@@ -98,7 +96,15 @@ function App() {
         },
         {
           path: "/cart",
-          element:<Cart cart={cart} removeFromCart={removeFromCart}/>
+          element:<Cart />
+        },
+        {
+          path: "/results",
+          element: <Results itemsarr={items.products}/>,
+        },
+        {
+          path: "/wishlist",
+          element: <Wishlist itemsarr={items.products}/>,
         },
       ]
     },
@@ -109,19 +115,17 @@ function App() {
     {
       path: "/makeaccount",
       element: <MakeAccount />,
-    },
-    {
-      path:"/otp",
-      element: <Otp />
     }
   ]);
 
   return (
-    <div className="app">
+    <AuthProvider>
+      <div className="app">
         <div className="container">
           <RouterProvider router={router}/>
         </div>
-    </div>
+      </div>
+    </AuthProvider>
   );
 }
 

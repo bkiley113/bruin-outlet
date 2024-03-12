@@ -3,10 +3,7 @@ const router = express.Router();
 import { productModel } from '../models/product.js';
 const Product = productModel;
 import mongoose from 'mongoose';
-import { authentication } from '../../middleware/authenticate.js';
-
-
-
+import { authenticator } from '../../middleware/authenticate.js';
 
 //get all products
 router.get('/', (req, res, next) => {
@@ -18,9 +15,12 @@ router.get('/', (req, res, next) => {
                     name: product.name,
                     price: product.price,
                     _id: product._id,
+                    productImage: product.productImage,
+                    description: product.description,
+                    category: product.category,
                     request: {
                         type: 'GET',
-                        url: 'http:localhost:3001/products/' + product._id
+                        url: 'http://localhost:3001/products/' + product._id
                     }
                 }
             })
@@ -34,14 +34,16 @@ router.get('/', (req, res, next) => {
 });
 
 //create new product
-//make sure this is only callable by admins
+//for test use only, comment out in final build
 router.post('/', (req,res,next) => {
     const id = new mongoose.Types.ObjectId();
     const product = new Product({
         _id: id,
         name: req.body.name,
         price: req.body.price,
-        productImage: "uploads/" + id
+        productImage: "uploads/" + id,
+        description: req.body.description,
+        category: req.body.category
     });
     product.save().then(result => {
         console.log(result);

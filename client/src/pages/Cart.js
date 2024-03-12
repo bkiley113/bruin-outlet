@@ -1,32 +1,50 @@
-import React from 'react'
-import Sidebar from '../components/Sidebar'
-
-const items = [
-  {
-    sku: 1,
-    title: "UCLA MENS HOODIE",
-    desc: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. A possimus excepturi aliquid nihil cumque ipsam facere aperiam at! Ea dolorem ratione sit debitis deserunt repellendus numquam ab vel perspiciatis corporis!",
-    img: "https://cdn.shoplightspeed.com/shops/616371/files/53697154/800x800x3/russell-athletic-ucla-joe-bear-bruins-pullover-hoo.jpg",
-    cat: "Men",
-    price: 79.99,
-    incart: true,
-  },
-  {
-    sku: 1,
-    title: "UCLA BALLS",
-    desc: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. A possimus excepturi aliquid nihil cumque ipsam facere aperiam at! Ea dolorem ratione sit debitis deserunt repellendus numquam ab vel perspiciatis corporis!",
-    img: "https://cdn.shoplightspeed.com/shops/616371/files/53697154/800x800x3/russell-athletic-ucla-joe-bear-bruins-pullover-hoo.jpg",
-    cat: "Men",
-    price: 999.99,
-    incart: true,
-  },
-];
-
-const subtotal = items.reduce((sum, item) => sum + item.price, 0);
-const total = (subtotal + (0.0925 * subtotal)).toFixed(2);
+import React, { useState, useEffect } from 'react';
+import {useAuth} from "../components/AuthContext.js"
+import { useNavigate } from 'react-router-dom';
+import AuthWarning from '../components/warning.js';
 
 const Cart = () => {
+
+  const [products, setProducts] = useState([]);
+  const { authToken, userId } = useAuth();
+
+  useEffect(() => {
+    if (!authToken) {
+      return;// Prevent further execution
+    }
+    fetch(`http://localhost:3001/orders?uid=${userId}`, {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // Assuming the data is in the format you provided
+        const loadedProducts = data.orders
+          .filter((order) => order.pid) // Ensure we only include orders with a product
+          .map((order) => ({
+            ...order.pid,
+            quantity: order.quantity,
+          }));
+
+        setProducts(loadedProducts);
+      })
+      .catch((error) => console.error('Error fetching products:', error));
+  }, [authToken, userId]);
+
+  const filteredOrders = products.filter(product => 
+    product && 
+    product.productImage && 
+    product.price !== undefined && 
+    product.quantity !== undefined && 
+    product.name
+  );
+  const subtotal = filteredOrders.reduce((sum, order) => sum + (order.price * order.quantity), 0);
+  const total = (subtotal + (0.0925 * subtotal)).toFixed(2);
+
+
   return (
+    <div>{!authToken && <AuthWarning letter='c' />}
     <div id="page-container">
       <div id="et-boc" class="et-boc">
         <div id="et-main-area">
@@ -42,7 +60,7 @@ const Cart = () => {
                           <div
                             class="et_pb_module et_pb_post_title et_pb_post_title_0 et_pb_bg_layout_light et_pb_text_align_left et_pb_text_align_center-tablet">
                             <div class="et_pb_title_container">
-                              <h1 class="entry-title">Cart</h1>
+                              <h1 class="entry-title">Order History</h1>
                             </div>
                           </div>
                         </div>
@@ -89,14 +107,14 @@ const Cart = () => {
                                 <div class="et_pb_blurb_content">
                                   <div class="et_pb_main_blurb_image">
                                     <span class="et_pb_image_wrap"><span
-                                      class="et-waypoint et_pb_animation_off et_pb_animation_off_tablet et_pb_animation_off_phone et-pb-icon et-pb-icon-circle et-animated"></span></span>
+                                      class="et-waypoint et_pb_animation_off et_pb_animation_off_tablet et_pb_animation_off_phone et-pb-icon et-pb-icon-circle et-animated">✔</span></span>
                                   </div>
                                   <div class="et_pb_blurb_container">
                                     <h4 class="et_pb_module_header">
                                       <span>Step 2/3</span>
                                     </h4>
                                     <div class="et_pb_blurb_description">
-                                      <p>Cart</p>
+                                      <p>order</p>
                                     </div>
                                   </div>
                                 </div>
@@ -116,7 +134,7 @@ const Cart = () => {
                                       <span>Step 3/3</span>
                                     </h4>
                                     <div class="et_pb_blurb_description">
-                                      <p>Checkout</p>
+                                      <p>ON ITS WAY!</p>
                                     </div>
                                   </div>
                                 </div>
@@ -158,9 +176,7 @@ const Cart = () => {
                                         </tr>
                                       </thead>
                                       <tbody>
-
-                                        {items.map(item => (
-                                          /* Chosen Itemization Row */
+                                        {filteredOrders.map((product) => (
                                           <tr class="woocommerce-cart-form__cart-item cart_item">
                                             {/* Remove Product Button */}
                                             <td class="product-remove">
@@ -171,30 +187,32 @@ const Cart = () => {
 
                                             {/* Image */}
                                             <td class="product-thumbnail">
-                                              <a href="placeholder/product/animal-pillow/"><img fetchpriority="high"
+                                            <a><img fetchpriority="high"
+                                              /* <a href={`/item/${item.product._id}`}><img fetchpriority="high" */
                                                 decoding="async" width="300" height="300"
-                                                src={item.img}
+                                                src={`http://localhost:3001/${product.productImage}.png`}
                                                 class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail"
                                                 alt="" /></a>
                                             </td>
 
                                             {/* Name */}
                                             <td class="product-name" data-title="Product">
-                                              <a href="placeholder/product/">{item.title}</a>
+                                            <a>{product.name}</a>
+                                              {/* <a href="placeholder/product/">{item.product.name}</a> */}
                                             </td>
 
                                             {/* Price*/}
                                             <td class="product-price" data-title="Price">
                                               <span class="woocommerce-Price-amount amount"><bdi><span
-                                                class="woocommerce-Price-currencySymbol">$</span>{item.price}</bdi></span>
+                                                class="woocommerce-Price-currencySymbol">$</span>{product.price.toFixed(2)}</bdi></span>
                                             </td>
 
                                             {/* Amount */}
                                             <td class="product-quantity" data-title="Quantity">
                                               <div class="quantity">
-                                                <input type="number" id="quantity_65e8f3f673515" class="input-text qty text"
-                                                  step="1" min="0" max="10" name=""
-                                                  value="1" title="Qty" size="4" placeholder="" inputmode="numeric" />
+                                                <div className='AMT'>
+                                                  {product.quantity}
+                                                </div>
                                               </div>
                                             </td>
                                           </tr>
@@ -219,18 +237,18 @@ const Cart = () => {
                             class="et_pb_with_border et_pb_module et_pb_wc_cart_totals et_pb_wc_cart_totals_0 woocommerce-cart et_pb_woo_custom_button_icon">
                             <div class="et_pb_module_inner">
                               <div class="cart_totals">
-                                <h2>Cart totals</h2>
+                                <h2>Order totals</h2>
                                 <table cellspacing="0" class="shop_table shop_table_responsive">
                                   <tbody>
                                     <tr class="cart-subtotal">
                                       <th>Subtotal</th>
                                       <td data-title="Subtotal">
                                         <span class="woocommerce-Price-amount amount"><bdi><span
-                                          class="woocommerce-Price-currencySymbol">$</span>{subtotal}</bdi></span>
+                                          class="woocommerce-Price-currencySymbol">$</span>{subtotal.toFixed(2)}</bdi></span>
                                       </td>
                                     </tr>
                                     <tr class="order-total">
-                                      <th>Total</th>
+                                      <th>Total (+9.25% tax)</th>
                                       <td data-title="Total">
                                         <strong><span class="woocommerce-Price-amount amount"><bdi><span
                                           class="woocommerce-Price-currencySymbol">$</span>{total}</bdi></span></strong>
@@ -239,8 +257,8 @@ const Cart = () => {
                                   </tbody>
                                 </table>
                                 <div class="wc-proceed-to-checkout">
-                                  <a href="placeholder/checkout/" class="checkout-button button alt wc-forward">
-                                    Proceed to checkout</a>
+                                  <a href="/" class="checkout-button button alt wc-forward">
+                                    Continue shopping</a>
                                 </div>
                               </div>
                             </div>
@@ -255,6 +273,7 @@ const Cart = () => {
           </div>
         </div>
       </div>
+    </div>
     </div>
   )
 }

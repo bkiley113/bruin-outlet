@@ -16,7 +16,7 @@ const divStyle = {
   alignItems: 'center',
   justifyContent: 'center',
   backgroundSize: 'cover',
-  height: '400px',
+  height: '400px'
 }
 const slideImages = [
   {
@@ -48,8 +48,7 @@ const Homepage = ({itemsarr}) => {
   };
   return (
     <div>
-      <div>{cat}</div>
-      <SearchBar run={searchRunFunction} />
+      <SearchBar />
       {cat ? (
         <div className='banner'>
           <img src={images[`${cat}.png`]} alt=''/>
@@ -60,7 +59,6 @@ const Homepage = ({itemsarr}) => {
             {slideImages.map((slideImage, index) => (
               <div key={index} className="each-slide">
                 <div style={{ ...divStyle, backgroundImage: `url(${slideImage.url})` }}>
-                  <span>{slideImage.caption}</span>
                 </div>
               </div>
             ))}
