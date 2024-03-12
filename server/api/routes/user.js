@@ -24,6 +24,7 @@ router.post('/signup', (req, res, next) => {
         }
         else {
             //encrypt the password and salt it 10 times
+            userId = new mongoose.Types.ObjectId();
             bcrypt.hash(req.body.password, 10, (err, hashpass) => {
                 if (err) {
                     return res.status(500).json({
@@ -31,14 +32,15 @@ router.post('/signup', (req, res, next) => {
                     });
                 } else {
                     const user = new User({
-                        _id: new mongoose.Types.ObjectId(),
+                        _id: userId,
                         email: req.body.email,
                         password: hashpass,
                         wishlist: []
                 });
                 user.save().then(result=> {
                     res.status(201).json({
-                        message: 'User created!'
+                        message: 'User created!',
+                        id: userId
                     })
                 }).catch(err=> {
                     res.status(500).json({error: err});
@@ -68,7 +70,8 @@ router.post('/login', (req, res, next) => {
                 sendOTPEmail({id:user[0]._id, email:user[0].email}, res);
                 //return status 200, frontend should check this then call /verifyotp
                 return res.status(200).json({
-                    message: 'Auth successful!'
+                    message: 'Auth successful!',
+                    userId: user[0]._id
                 });
             }
             //if no error but no match, 
