@@ -37,6 +37,7 @@ router.post('/', authenticator, (req, res, next) => {
     {
         uid: user ID
         quantity: quantity of items
+        size: size of item (leave blank for N/A)
         pid: product id
     }
     */
@@ -45,11 +46,16 @@ router.post('/', authenticator, (req, res, next) => {
         if (!product){
             throw ("Product not found!");
         }
+        // if size is provided, set it; if not make it N/A
+        let prodSize = "N/A";
+        if (req.body.size)
+            prodSize = req.body.size;
         //if succeeds, create new order
         const order = new Order({
             _id: new mongoose.Types.ObjectId(),
             uid: req.body.uid,
             quantity: req.body.quantity,
+            size: prodSize,
             pid: req.body.pid
         });
         return order.save();
@@ -58,14 +64,17 @@ router.post('/', authenticator, (req, res, next) => {
             oid: result._id,
             uid: result.uid,
             quantity: result.quantity,
+            size: result.size,
             pid: result.pid
         });
+        console.log(result);
         res.status(201).json({
             message: 'Order created!',
             createdOrder: {
                 _id: result._id,
                 uid: result.uid,
                 quantity: result.quantity,
+                size: result.size,
                 pid: result.pid
             },
             request: {
@@ -74,7 +83,8 @@ router.post('/', authenticator, (req, res, next) => {
             }
     });
 }).catch(err => {
-    res.status(500).json({error: err})
+    res.status(500).json({error: err});
+    console.log(err);
 })
 
     });
@@ -83,12 +93,13 @@ router.post('/', authenticator, (req, res, next) => {
 router.get('/', authenticator, (req, res, next) => {
     //query format:
     //{uid: user ID}
-    Order.find({uid: req.query.uid}).select("pid quantity _id uid").populate('pid').exec().then(ords => {        res.status(200).json({
+    Order.find({uid: req.query.uid}).select("pid quantity _id size uid").populate('pid').exec().then(ords => {        res.status(200).json({
             count: ords.length,
             orders: ords.map(ord => {
                 return{
                     pid: ord.pid,
                     quantity: ord.quantity,
+                    size: ord.size,
                     uid: ord.uid,
                     request: {
                         type: 'GET',
@@ -138,7 +149,7 @@ const sendOrderReceipt = async ({oid, uid, quantity, pid}, res) => {
 
             <strong><font size = 5><font color=#FFB81C>Total: \$${total}</font>
             </p>
-            <p><font size = 3><font color=#4287f5>Bruin</font><font color=#FFB81C>Outlet</font>™</font></p>`
+            <p><font size = 3><font color=#4287f5>UCLA</font><font color=#FFB81C>Outlet</font>™</font></p>`
         };
         await transporter.sendMail(mailOptions);
        console.log("Order Email sent.");
