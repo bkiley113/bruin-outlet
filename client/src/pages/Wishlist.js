@@ -1,17 +1,19 @@
 import React, {useState, useEffect} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from "../components/AuthContext.js";
+import AuthWarning from '../components/warning.js';
+
 
 const Wishlist = ({itemsarr}) => {
   const { authToken, userId } = useAuth();
   const navigate = useNavigate();
   const [wishlistIds, setWishlistIds] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (!authToken) {
-      alert('Please create an account or log in to view your wishlist.');
-      navigate('/');
-      return; // Prevent further execution
+      setIsLoading(false);
+      return;
     }
     fetchUserWishlist();
   }, [userId, authToken]); // Dependency array
@@ -35,6 +37,8 @@ const Wishlist = ({itemsarr}) => {
       setWishlistIds(data.wishlist);
     } catch (error) {
       console.error('Failed to fetch user wishlist:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -65,8 +69,12 @@ const Wishlist = ({itemsarr}) => {
   };
 
   const filteredItems = itemsarr.filter(item => wishlistIds.includes(item._id));
+
+  if (isLoading) {
+    return <div>Loading...</div>; // Or any other loading indicator you prefer
+  }
   return (
-    <div>
+    <div>{!authToken && <AuthWarning letter='c' />}
       <h1 className="WL">Your Wishlist Items:</h1>
       <div className="wishlist-container">
         {filteredItems.length > 0 ? (

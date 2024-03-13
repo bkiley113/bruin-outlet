@@ -9,7 +9,7 @@ function AuthWarning({ letter }) {
     if (letter === 'c') {
       alertMessage = "Please create an account or log in to place orders and view order history.";
     } else if (letter === 'w') {
-      alertMessage = "Message 2: Another message goes here...";
+      alertMessage = "Please create an account or log in to view and modify your wishlist.";
     } else {
       alertMessage = "Default message goes here...";
     }

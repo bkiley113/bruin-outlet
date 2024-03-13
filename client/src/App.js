@@ -1,7 +1,7 @@
 import "./styles/style.scss"
 import "./styles/cart.css"
 import "./styles/cart_font.css"
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   createBrowserRouter,
   RouterProvider,
@@ -115,7 +115,7 @@ function App() {
     {
       path: "/makeaccount",
       element: <MakeAccount />,
-    },
+    }
   ]);
 
   return (
