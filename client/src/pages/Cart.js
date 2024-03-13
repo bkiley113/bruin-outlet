@@ -6,31 +6,47 @@ import AuthWarning from '../components/warning.js';
 const Cart = () => {
 
   const [products, setProducts] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const { authToken, userId } = useAuth();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (!authToken) {
+    if (!authToken || !userId) {
+      setIsLoading(false); // Ensures that loading state is updated if no authToken or userId
       return;
     }
-    fetch(`http://localhost:3001/orders?uid=${userId}`, {
-      headers: {
-        Authorization: `Bearer ${authToken}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // Assuming the data is in the format you provided
+  
+    const fetchOrders = async () => {
+      try {
+        const response = await fetch(`http://localhost:3001/orders?uid=${userId}`, {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        });
+  
+        if (!response.ok) {
+          throw new Error('Failed to fetch orders');
+        }
+  
+        const data = await response.json();
         const loadedProducts = data.orders
-          .filter((order) => order.pid) // Ensure we only include orders with a product
-          .map((order) => ({
+          .filter(order => order.pid) // Ensure we only include orders with a product
+          .map(order => ({
             ...order.pid,
             quantity: order.quantity,
           }));
-
+  
         setProducts(loadedProducts);
-      })
-      .catch((error) => console.error('Error fetching products:', error));
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+  
+    fetchOrders();
   }, [authToken, userId]);
+  
 
   const filteredOrders = products.filter(product => 
     product && 
@@ -42,8 +58,16 @@ const Cart = () => {
   const subtotal = filteredOrders.reduce((sum, order) => sum + (order.price * order.quantity), 0);
   const total = (subtotal + (0.0925 * subtotal)).toFixed(2);
 
+  const handleProductClick = (product) => {
+    setSelectedProduct(product);
+  };
+
+  if (isLoading) {
+    return <div>Loading your wishlist...</div>; // Or any other loading indicator you prefer
+  }
 
   return (
+
     <div>{!authToken && <AuthWarning letter='c' />}
     <div id="page-container">
       <div id="et-boc" class="et-boc">
@@ -61,6 +85,10 @@ const Cart = () => {
                             class="et_pb_module et_pb_post_title et_pb_post_title_0 et_pb_bg_layout_light et_pb_text_align_left et_pb_text_align_center-tablet">
                             <div class="et_pb_title_container">
                               <h1 class="entry-title">Order History</h1>
+                              <p style={{ fontSize: '20px', fontWeight: 'bold', fontStyle: 'italic', textAlign: 'left', marginTop: '10px' }}>Click on an item to view order details...</p>
+                              {products.length === 0 && (
+                                <p style={{ fontSize: '18px', fontWeight: 'bold', fontStyle: 'italic', textAlign: 'left', marginTop: '10px', color: 'red' }}>Looks like you haven't made any orders yet.</p>
+                              )}
                             </div>
                           </div>
                         </div>
@@ -193,10 +221,13 @@ const Cart = () => {
 
                                             {/* Name */}
                                             <td class="product-name" data-title="Product">
-                                            <a>{product.name}</a>
-                                              {/* <a href="placeholder/product/">{item.product.name}</a> */}
+                                              <a href="#" onClick={(e) => {
+                                                e.preventDefault(); // Prevent the default anchor link behavior
+                                                handleProductClick(product);
+                                              }}>
+                                                {product.name}
+                                              </a>
                                             </td>
-
                                             {/* Price*/}
                                             <td class="product-price" data-title="Price">
                                               <span class="woocommerce-Price-amount amount"><bdi><span
@@ -217,10 +248,6 @@ const Cart = () => {
                                       </tbody>
                                     </table>
                                   </form>
-
-
-
-
                                   <div class="cart-collaterals"></div>
                                 </div>
                               </div>
@@ -232,26 +259,42 @@ const Cart = () => {
                           <div
                             class="et_pb_with_border et_pb_module et_pb_wc_cart_totals et_pb_wc_cart_totals_0 woocommerce-cart et_pb_woo_custom_button_icon">
                             <div class="et_pb_module_inner">
-                              <div class="cart_totals">
-                                <h2>Order totals</h2>
-                                <table cellspacing="0" class="shop_table shop_table_responsive">
-                                  <tbody>
-                                    <tr class="cart-subtotal">
-                                      <th>Subtotal</th>
-                                      <td data-title="Subtotal">
-                                        <span class="woocommerce-Price-amount amount"><bdi><span
-                                          class="woocommerce-Price-currencySymbol">$</span>{subtotal.toFixed(2)}</bdi></span>
-                                      </td>
-                                    </tr>
-                                    <tr class="order-total">
-                                      <th>Total (+9.25% tax)</th>
-                                      <td data-title="Total">
-                                        <strong><span class="woocommerce-Price-amount amount"><bdi><span
-                                          class="woocommerce-Price-currencySymbol">$</span>{total}</bdi></span></strong>
-                                      </td>
-                                    </tr>
-                                  </tbody>
-                                </table>
+                            <div class="cart_totals">
+                              <h2>Order details</h2>
+                              <table cellspacing="0" class="shop_table shop_table_responsive">
+                                <tbody>
+                                  <tr class="cart-extra-info">
+                                    <th>Name</th>
+                                    <td data-title="ID" style={{ color: 'white', fontWeight: 'bold' }}>
+                                      {selectedProduct ? selectedProduct.name : 'N/A'}
+                                    </td>
+                                  </tr>
+                                  <tr class="cart-extra-info">
+                                    <th>Size</th>
+                                    <td data-title="Size" style={{ color: 'white', fontWeight: 'bold' }}>
+                                      {selectedProduct && selectedProduct.size ? selectedProduct.size : 'N/A'}
+                                    </td>
+                                  </tr>
+                                  <tr class="cart-extra-info">
+                                    <th>Quantity</th>
+                                    <td data-title="Quantity" style={{ color: 'white', fontWeight: 'bold' }}>
+                                      {selectedProduct ? selectedProduct.quantity : 'N/A'}
+                                    </td>
+                                  </tr>
+                                  <tr class="cart-subtotal">
+                                    <th>Price</th>
+                                    <td data-title="Price" style={{ color: 'white', fontWeight: 'bold' }}>
+                                      {selectedProduct ? `$${selectedProduct.price.toFixed(2)}` : 'N/A'}
+                                    </td>
+                                  </tr>
+                                  <tr class="order-total">
+                                    <th>Total</th>
+                                    <td data-title="Total" style={{ color: 'white', fontWeight: 'bold' }}>
+                                      {selectedProduct ? `$${(selectedProduct.quantity * selectedProduct.price).toFixed(2)}` : 'N/A'}
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
                                 <div class="wc-proceed-to-checkout">
                                   <a href="/" class="checkout-button button alt wc-forward">
                                     Continue shopping</a>
