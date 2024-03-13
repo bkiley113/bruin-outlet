@@ -235,6 +235,22 @@ router.get('/wishlist', authenticator, (req, res, next) => {
     });
 });
 
+router.get('/verify', authenticator, (req, res, next) => {
+    // Request format: { userId: User ID}
+    userId = req.query.userId;
+    User.findOne({_id: userId}).exec.then(user => {
+        const email = user.email;
+        res.status(200).json({
+            _id: userId,
+            email
+        })
+    }).catch(err => {
+        res.status(500).json({
+            error: err
+        });
+        console.log(err);
+    })        
+});
 
 
 //add a wishlist item

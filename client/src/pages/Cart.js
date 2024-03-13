@@ -29,13 +29,13 @@ const Cart = () => {
         }
   
         const data = await response.json();
-        const loadedProducts = data.orders
-          .filter(order => order.pid) // Ensure we only include orders with a product
+        const loadedProducts = data.orders.filter(order => order.pid) // Ensure we only include orders with a product
           .map(order => ({
             ...order.pid,
             quantity: order.quantity,
+            size: order.size ? order.size: "N/A"
           }));
-  
+          
         setProducts(loadedProducts);
       } catch (error) {
         console.error('Error fetching products:', error);
@@ -53,8 +53,10 @@ const Cart = () => {
     product.productImage && 
     product.price !== undefined && 
     product.quantity !== undefined && 
+    product.size !== undefined &&
     product.name
   );
+
   const subtotal = filteredOrders.reduce((sum, order) => sum + (order.price * order.quantity), 0);
   const total = (subtotal + (0.0925 * subtotal)).toFixed(2);
 
@@ -275,7 +277,7 @@ const Cart = () => {
                                   <tr class="cart-extra-info">
                                     <th>Size</th>
                                     <td data-title="Size" style={{ color: 'white', fontWeight: 'bold' }}>
-                                      {selectedProduct && selectedProduct.size ? selectedProduct.size : 'N/A'}
+                                      {selectedProduct ? selectedProduct.size : 'N/A'}
                                     </td>
                                   </tr>
                                   <tr class="cart-extra-info">

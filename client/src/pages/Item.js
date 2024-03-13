@@ -116,14 +116,14 @@ const Item = ({itemId, itemsarr}) => {
             );
     };
 
-    const QuantityButton = ({ count, handleIncrementCounter, handleDecrementCounter}) => (
+    const QuantityButton = ({ count, handleIncrementCounter, handleDecrementCounter,}) => (
             <div className="btn-group">
-                <button className="increment-btn" onClick={handleIncrementCounter}>
-                    <span class="material-symbols-outlined">+</span>
-                </button>
-                <p>{count}</p>
                 <button className="decrement-btn" onClick={handleDecrementCounter}>
                     <span class="material-symbols-outlined">-</span>
+                </button>
+                <p>{count}</p>
+                <button className="increment-btn" onClick={handleIncrementCounter}>
+                    <span class="material-symbols-outlined">+</span>
                 </button>
             </div>
         );
