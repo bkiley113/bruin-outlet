@@ -1,12 +1,12 @@
 import React, {useState} from 'react'
 import { useAuth } from "../components/AuthContext.js"
-import AuthWarning from '../components/warning.js';
 
 const Item = ({itemId, itemsarr}) => {
     const item = itemsarr.find(item => item._id === itemId);
     const [count, setCount] = useState(1);
     const { authToken, userId } = useAuth();
     const [responseMessage, setResponseMessage] = useState('');
+    const [selectedSize, setSelectedSize] = useState('');
 
     const handleIncrementCounter = () => {
         setCount((prevState) => Math.min(prevState + 1, 10)); // Assuming 100 is the maxValue
@@ -22,18 +22,24 @@ const Item = ({itemId, itemsarr}) => {
             return;
         }
         try {
-          const response = await fetch('http://localhost:3001/orders/', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${authToken}`,
-            },
-            body: JSON.stringify({
-              uid: userId,
-              quantity: count,
-              pid: item._id,
-            }),
-          });
+            const requestBody = {
+                uid: userId,
+                quantity: count,
+                pid: item._id,
+            };
+    
+            if (item.category.includes("clothes")) {
+                requestBody.size = selectedSize;
+            }
+            const response = await fetch('http://localhost:3001/orders/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${authToken}`,
+                },
+                body: JSON.stringify(requestBody),
+            });
+    
     
           if (!response.ok) {
             throw new Error('Something went wrong with placing the order');
@@ -87,7 +93,6 @@ const Item = ({itemId, itemsarr}) => {
     };
 
     const SizeSelector = () => {
-        const [selectedSize, setSelectedSize] = useState('');
     
         const handleSizeSelection = (size) => {
         setSelectedSize(size);
