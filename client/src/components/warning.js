@@ -17,7 +17,6 @@ function AuthWarning({ letter }) {
     window.location = '/';
   }, [letter, navigate]);
 
-  // Return null since the component doesn't render anything
   return null;
 }
 
