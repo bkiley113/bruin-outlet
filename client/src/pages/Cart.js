@@ -10,7 +10,7 @@ const Cart = () => {
 
   useEffect(() => {
     if (!authToken) {
-      return;// Prevent further execution
+      return;
     }
     fetch(`http://localhost:3001/orders?uid=${userId}`, {
       headers: {
@@ -153,10 +153,6 @@ const Cart = () => {
                               <div
                                 class="et_pb_with_border et_pb_module et_pb_wc_cart_products et_pb_wc_cart_products_0 woocommerce-cart woocommerce et_pb_woo_custom_button_icon et_pb_row_layout_default">
                                 <div class="et_pb_module_inner">
-
-
-
-
                                   <form class="woocommerce-cart-form" action="placeholder/" method="post">
                                     <table class="shop_table shop_table_responsive cart woocommerce-cart-form__contents"
                                       cellspacing="0">
