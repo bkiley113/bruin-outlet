@@ -45,18 +45,20 @@ const Homepage = ({itemsarr}) => {
   })
 
 
+
   const images = importAll(require.context('../images/clothingbanners', false, /\.(png|jpe?g|svg)$/));
   const [searchParams] = useSearchParams();
   const cat = searchParams.get('cat');
-  const searchRunFunction = (userInput) => {
-    console.log('Search triggered with input:', userInput);
-  };
   return (
     <div>
       <SearchBar />
       {cat ? (
-        <div className='banner'>
-          <img src={images[`${cat}.png`]} alt=''/>
+        <div className='bannercont'>
+          <div className='banner'>
+            <img src={images[`${cat}.png`]} alt=''/>
+          </div>
+          <h1 className='bannersub' style={{ display:'flex', borderBottom: '2px solid #000', position: 'relative', top: '20px' }}>
+          </h1>
         </div>
       ) : (
         <div>
