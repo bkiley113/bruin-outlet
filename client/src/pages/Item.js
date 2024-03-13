@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { useAuth } from "../components/AuthContext.js"
 
 const Item = ({itemId, itemsarr}) => {
@@ -130,6 +130,12 @@ const Item = ({itemId, itemsarr}) => {
     console.log(item)
     console.log(item.category);
     const noSize = item.category.includes("clothes") ? <SizeSelector/> : <p>N/A</p>;
+
+
+    useEffect(() => {
+        document.title = `${item.name}`;
+      })
+    
     return (
     <div>
         <div className='itempage'>

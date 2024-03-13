@@ -35,33 +35,39 @@ const Gallery = ({itemsarr}) => {
     setNotFoundFlag(items.length === 0);
   }, [cat, searchQuery, itemsarr]);
 
+  const isHome = location.pathname === '/' && !cat && !searchQuery;
+
+
   return (
-    <div className="gallery-container">
-      {notFoundFlag ? (
-        <h3>Sorry, we could not match any items to your search.</h3>
-      ) : (
-        <div className="gallery">
-          {filteredItems.map((item) => (
-            <div key={item.id} className="img"> {/* Ensure key is placed here for proper list rendering */}
-              <Link className='link' to={`/item/${item._id}`}>
-                <img
-                  className="gallery__item"
-                  src={`http://localhost:3001/${item.productImage}.png`}
-                  alt=''
-                />
-              </Link>
-              <div className="imgbox">
+    <div className='homemess'>
+      {isHome && <h1>All Items</h1>}
+      <div className="gallery-container">
+        {notFoundFlag ? (
+          <h3>Sorry, we could not match any items to your search.</h3>
+        ) : (
+          <div className="gallery">
+            {filteredItems.map((item) => (
+              <div key={item.id} className="img">
                 <Link className='link' to={`/item/${item._id}`}>
-                  <div className="text">
-                    <h6>{item.name}</h6>
-                    <p>${item.price.toFixed(2)}</p>
-                  </div>
+                  <img
+                    className="gallery__item"
+                    src={`http://localhost:3001/${item.productImage}.png`}
+                    alt=''
+                  />
                 </Link>
+                <div className="imgbox">
+                  <Link className='link' to={`/item/${item._id}`}>
+                    <div className="text">
+                      <h6>{item.name}</h6>
+                      <p>${item.price.toFixed(2)}</p>
+                    </div>
+                  </Link>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
-      )}
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
