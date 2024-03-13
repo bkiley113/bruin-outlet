@@ -5,8 +5,43 @@ import Drop from './DropDown.js'
 import { useAuth } from "./AuthContext.js"
 
 const HeaderBar = () => {
-    const { authToken, userEmail, userId, logout } = useAuth();
+    const { authToken, userId, logout } = useAuth();
     const [isHovering, setIsHovering] = useState(false);
+    const [loggedIn, setLoggedIn] = useState(false);
+    const [uEmail, setUEmail] = useState('');
+
+    const verifyUser = (userId, authToken) => {
+        const url = new URL(`http://localhost:3001/user/verify?userId=${userId}`);
+    
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${authToken}`,
+            },
+        })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok. The user is may not be logged in.');
+            }
+            return response.json();
+        })
+        .then((data) => {
+            if (data._id) {
+                setLoggedIn(true);
+                setUEmail(data.email);
+            } else {
+                setLoggedIn(false);
+            }
+        })
+        .catch((error) => {
+            console.error('There was an issue verifying the user:', error);
+            setLoggedIn(false);
+        });
+    };
+
+    React.useEffect(() => {
+        verifyUser(userId, authToken);
+    }, []);
 
 
     const nameOnly = (email) => {
@@ -20,12 +55,6 @@ const HeaderBar = () => {
         }
     };
 
-
-    React.useEffect(() => {
-        console.log('JWT Token:', authToken);
-        console.log('User Email:', userEmail);
-        console.log('User ID:', userId);
-    }, [authToken, userEmail, userId]); 
 
     return (
         <div className='headerbar'>
@@ -51,7 +80,7 @@ const HeaderBar = () => {
                     <Link className="link" to="/wishlist">
                         <div className="acct"><h4>Wishlist</h4></div>
                     </Link>
-                    {authToken ? (
+                    {loggedIn ? (
                         <div className="acct" 
                         onMouseEnter={() => setIsHovering(true)} 
                         onMouseLeave={() => setIsHovering(false)} 
@@ -66,7 +95,7 @@ const HeaderBar = () => {
                            width: '100%',
                            textAlign: 'center'
                        }}>
-                           {nameOnly(userEmail)}
+                           {nameOnly(uEmail)}
                        </h4>
                        {/* LOGOUT? is gonna be shown if hoveering */}
                        <h4 style={{ 

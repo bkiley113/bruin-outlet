@@ -77,9 +77,7 @@ const Login = () => {
     return (
         <div className='authenticate'>
             <Link to='/'>
-                <a>
                     <img className="loginlogo" src={img} />
-                </a>
             </Link>
             <div className="auth-container">
                 <form onSubmit={handleLoginSubmit}>

@@ -237,8 +237,11 @@ router.get('/wishlist', authenticator, (req, res, next) => {
 
 router.get('/verify', authenticator, (req, res, next) => {
     // Request format: { userId: User ID}
-    userId = req.query.userId;
-    User.findOne({_id: userId}).exec.then(user => {
+   const userId = req.query.userId;
+    User.findOne({_id: userId}).exec().then(user => {
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' }); // Handle case where user is not found
+        }
         const email = user.email;
         res.status(200).json({
             _id: userId,

@@ -47,7 +47,7 @@ const Gallery = ({itemsarr}) => {
         ) : (
           <div className="gallery">
             {filteredItems.map((item) => (
-              <div key={item.id} className="img">
+              <div key={item._id} className="img">
                 <Link className='link' to={`/item/${item._id}`}>
                   <img
                     className="gallery__item"

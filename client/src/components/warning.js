@@ -14,7 +14,7 @@ function AuthWarning({ letter }) {
       alertMessage = "Default message goes here...";
     }
     alert(alertMessage);
-    navigate('/');
+    window.location = '/';
   }, [letter, navigate]);
 
   // Return null since the component doesn't render anything
