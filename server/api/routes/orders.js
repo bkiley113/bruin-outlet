@@ -115,7 +115,7 @@ router.get('/', authenticator, (req, res, next) => {
     })
 });
 
-const sendOrderReceipt = async ({oid, uid, quantity, pid}, res) => {
+const sendOrderReceipt = async ({oid, uid, quantity, pid, size}, res) => {
     try {
         //search for product and user with given id's, anticipating errors
         let email;
@@ -145,7 +145,8 @@ const sendOrderReceipt = async ({oid, uid, quantity, pid}, res) => {
             <p>
             <strong>Product:</strong> ${prodName}<br>
             <strong>Unit price:</strong> \$${price}<br>
-            <strong>Quantity:</strong> ${quantity}<br><br>
+            <strong>Quantity:</strong> ${quantity}<br>
+            <strong>Size:</strong> ${size}<br><br>
 
             <strong><font size = 5><font color=#FFB81C>Total: \$${total}</font>
             </p>
