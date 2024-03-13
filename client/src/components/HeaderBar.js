@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Logo from "../images/demologo.png"
 import {Link} from 'react-router-dom'
 import Drop from './DropDown.js'
@@ -6,6 +6,8 @@ import { useAuth } from "./AuthContext.js"
 
 const HeaderBar = () => {
     const { authToken, userEmail, userId, logout } = useAuth();
+    const [isHovering, setIsHovering] = useState(false);
+
 
     const nameOnly = (email) => {
         return email.split('@')[0];
@@ -47,13 +49,40 @@ const HeaderBar = () => {
                         <h6>STATIONERY</h6>
                     </Link>
                     <Link className="link" to="/wishlist">
-                        <span>WISHLIST</span>
+                        <div className="acct"><h4>Wishlist</h4></div>
                     </Link>
                     {authToken ? (
-                        <span onClick={nameClick}>{nameOnly(userEmail)}</span>
+                        <div className="acct" 
+                        onMouseEnter={() => setIsHovering(true)} 
+                        onMouseLeave={() => setIsHovering(false)} 
+                        onClick={nameClick}
+                        style={{ position: 'relative', display: 'inline-block', cursor: 'pointer' }}>
+                       {/* User Email/Name - Shown when not hovering */}
+                       <h4 style={{ 
+                           visibility: isHovering ? 'hidden' : 'visible',
+                           position: 'relative',
+                           top: 0, 
+                           left: 0,
+                           width: '100%', // Ensure it covers the full width of the parent
+                           textAlign: 'center' // Optional: Center-align the text
+                       }}>
+                           {nameOnly(userEmail)}
+                       </h4>
+                       {/* LOGOUT? - Shown when hovering */}
+                       <h4 style={{ 
+                           visibility: isHovering ? 'visible' : 'hidden',
+                           position: 'absolute',
+                           top: 0, 
+                           left: 0,
+                           width: '100%', // Match the width of the username for consistent appearance
+                           textAlign: 'center' // Optional: Center-align the text
+                       }}>
+                           LOGOUT?
+                       </h4>
+                   </div>
                     ) : (
                         <Link className="link" to="/login">
-                            Login
+                            <div className="acct"><h4>Login</h4></div>
                         </Link>
                     )}
                     <span className="cart">

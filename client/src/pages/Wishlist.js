@@ -67,6 +67,9 @@ const Wishlist = ({itemsarr}) => {
       alert('Error removing item from wishlist');
     }
   };
+  useEffect(() => {
+    document.title = 'Your Wishlist';
+  })
 
   const filteredItems = itemsarr.filter(item => wishlistIds.includes(item._id));
 

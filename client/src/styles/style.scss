@@ -22,6 +22,15 @@
             top: 30px;
             border-bottom: 2px solid black;
         }
+        .homemess{
+            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            h1{
+                margin-top:20px;
+                font-style: italic;
+                font-weight: bold;
+                border-bottom: 2px solid black;
+            }
+        }
         //searchbar
         .searchbar{
             position: relative;
@@ -215,6 +224,23 @@
                         background-color:#0C356A;
                     }
                 }
+                .acct{
+                    h4{
+                        font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                        font-size: 18px;
+                        font-weight: 300;
+                        padding-left: 10px;
+                        padding-right: 10px;
+                        padding-top: 10px;
+                        border-bottom: 2px solid black;
+                        transition: transform 0.2s ease-in-out;
+                        &:hover{
+                            color: #0174BE;
+                            border-bottom: 2px solid #0174BE;
+                            // transform: scale(1.2);
+                        }
+                    }
+                }
                 h6.drop6{
                     &:hover{
                         color:white;
@@ -273,21 +299,24 @@
                     }
                 }
                 //clickable cart icon, hover icon turns it black
+
                 .cart{
                     background: url('../images/cart.png') center/cover;
-                    width: 62px;
-                    height: 49px;
+                    width: 50px;
+                    height: 50px;
                     display: flex;
                     align-items: center;
                     justify-content: center;
+                    transition: transform 0.2s ease-in-out;
 
                     &:hover{
                         background: url('../images/cart-2.png') center/cover;
-                        width: 62px;
-                        height: 49px;
+                        width: 50px;
+                        height: 50px;
                         display: flex;
                         align-items: center;
                         justify-content: center;
+                        transform: scale(1.2);
                     }
                 }
             }
@@ -303,17 +332,65 @@
         }
 
         //pagefooter
-        footer{
+        .page-footer {
             margin-top: 200px;
-            padding: 30px;
-            background-color: rgba(#0174BE, .5);
+            padding: 50px 30px;
+            background-color: #0174BE;
+            color: white;
             display: flex;
+            flex-wrap: wrap;
             align-items: center;
             justify-content: space-between;
-            img{
-                width:100px;
+            gap: 20px;
+          
+            .footer-logo img {
+              width: 120px;
             }
-        }
+          
+            .footer-about, .footer-social, .footer-nav, .footer-thanks {
+              flex: 1;
+            }
+          
+            .social-icons {
+              display: flex;
+              gap: 10px;
+          
+              svg {
+                fill: white;
+                width: 24px;
+                height: 24px;
+                cursor: pointer;
+              }
+            }
+          
+            .footer-nav {
+              ul {
+                list-style: none;
+                padding: 0;
+          
+                li {
+                  margin-bottom: 10px;
+                  cursor: pointer;
+                }
+              }
+            }
+          }
+          
+          @media (max-width: 768px) {
+            .page-footer {
+              flex-direction: column;
+              align-items: flex-start;
+          
+              .footer-logo img {
+                margin-bottom: 20px;
+              }
+          
+              .social-icons {
+                justify-content: flex-start;
+              }
+            }
+          }
+          
         .gallery-container{
             display: flex;
             position: relative;

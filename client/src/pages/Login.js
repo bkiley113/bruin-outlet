@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../components/AuthContext.js';
 import img from "../images/demologo.png";
@@ -70,6 +70,9 @@ const Login = () => {
             setErrorMessage("An error occurred during OTP verification. Please try again.");
         }
     };
+    useEffect(() => {
+        document.title = 'Log in to your account';
+    })
 
     return (
         <div className='authenticate'>

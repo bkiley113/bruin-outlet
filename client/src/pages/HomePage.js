@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import image1 from "../images/slideshow/store.jpg"
 import image2 from "../images/slideshow/crowd.jpg"
 import image3 from "../images/slideshow/ppl.webp"
@@ -6,7 +6,6 @@ import SearchBar from "../components/SearchBar.js"
 import Gallery from '../components/Gallery.js'
 import {useSearchParams} from 'react-router-dom'
 
-// export default HomePage
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css'
 
@@ -40,6 +39,12 @@ function importAll(r) {
 }
 
 const Homepage = ({itemsarr}) => {
+
+  useEffect(() => {
+    document.title = 'UCLAoutlet'
+  })
+
+
   const images = importAll(require.context('../images/clothingbanners', false, /\.(png|jpe?g|svg)$/));
   const [searchParams] = useSearchParams();
   const cat = searchParams.get('cat');

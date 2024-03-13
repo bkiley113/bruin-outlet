@@ -61,6 +61,9 @@ const Cart = () => {
   const handleProductClick = (product) => {
     setSelectedProduct(product);
   };
+  useEffect(() => {
+    document.title = 'View Order History';
+  })
 
   if (isLoading) {
     return <div>Loading your wishlist...</div>; // Or any other loading indicator you prefer
