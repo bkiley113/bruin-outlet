@@ -57,25 +57,25 @@ const HeaderBar = () => {
                         onMouseLeave={() => setIsHovering(false)} 
                         onClick={nameClick}
                         style={{ position: 'relative', display: 'inline-block', cursor: 'pointer' }}>
-                       {/* User Email/Name - Shown when not hovering */}
+                       {/* User email and the name are gonna be shown when not hovering over it */}
                        <h4 style={{ 
                            visibility: isHovering ? 'hidden' : 'visible',
                            position: 'relative',
                            top: 0, 
                            left: 0,
-                           width: '100%', // Ensure it covers the full width of the parent
-                           textAlign: 'center' // Optional: Center-align the text
+                           width: '100%',
+                           textAlign: 'center'
                        }}>
                            {nameOnly(userEmail)}
                        </h4>
-                       {/* LOGOUT? - Shown when hovering */}
+                       {/* LOGOUT? is gonna be shown if hoveering */}
                        <h4 style={{ 
                            visibility: isHovering ? 'visible' : 'hidden',
                            position: 'absolute',
                            top: 0, 
                            left: 0,
-                           width: '100%', // Match the width of the username for consistent appearance
-                           textAlign: 'center' // Optional: Center-align the text
+                           width: '100%',
+                           textAlign: 'center'
                        }}>
                            LOGOUT?
                        </h4>

@@ -134,7 +134,7 @@ const Item = ({itemId, itemsarr}) => {
 
     useEffect(() => {
         document.title = `${item.name}`;
-      })
+    })
     
     return (
     <div>
