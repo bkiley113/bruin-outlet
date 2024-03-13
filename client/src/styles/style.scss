@@ -765,12 +765,16 @@
                         }
                     }
                     p {
+                        font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                        font-weight: bold;
+                        position: relative;
                         width: 50px;
                         display: flex;
                         align-items: center;
                         justify-content: center;
                         border-left: 1px solid #F5F8FB;
                         border-right: 1px solid #F5F8FB;
+                        top: 7px;
                       }
 
                 }

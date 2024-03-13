@@ -21,6 +21,10 @@ const Item = ({itemId, itemsarr}) => {
             alert('Please log in to place an order.');
             return;
         }
+        if (item.category.includes("clothes") && selectedSize === '') {
+            alert('Please select a size to order.');
+            return;
+        }
         try {
             const requestBody = {
                 uid: userId,
