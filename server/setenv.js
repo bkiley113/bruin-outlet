@@ -1,7 +1,10 @@
 import fs from 'fs';
+import readline from 'readline-sync';
 
-console.log('here');
-updateEnv("DB_URI", "mongodb+srv://matthewk8:ii8M66Jp3SCk0HQ8@uclastore.lmtqaex.mongodb.net/?retryWrites=true");
+let dbkey = await String(readline.question("Enter DB key: "));
+updateEnv("DB_URI", dbkey);
+let emailPass = await String(readline.question("Enter email app key: "));
+updateEnv("AUTH_PASS", emailPass);
 
 function updateEnv(key, value) {
     //read contents of .env
