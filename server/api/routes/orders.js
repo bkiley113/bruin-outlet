@@ -138,7 +138,7 @@ const sendOrderReceipt = async ({oid, uid, quantity, pid}, res) => {
 
             <strong><font size = 5><font color=#FFB81C>Total: \$${total}</font>
             </p>
-            <p><font size = 3><font color=#4287f5><strong>UCLA</strong></font><font color=#FFB81C>Outlet</font>™</font></p>`
+            <p><font size = 3><font color=#4287f5>Bruin</font><font color=#FFB81C>Outlet</font>™</font></p>`
         };
         await transporter.sendMail(mailOptions);
        console.log("Order Email sent.");
