@@ -1,19 +1,36 @@
 import fs from 'fs';
+import readline from 'readline-sync';
 
-console.log('here');
-updateEnv("DB_URI", "mongodb+srv://matthewk8:ii8M66Jp3SCk0HQ8@uclastore.lmtqaex.mongodb.net/?retryWrites=true");
+try {
+let dbkey = await String(readline.question("Enter DB key: "));
+updateEnv("DB_URI", dbkey);
+updateEnv("AUTH_EMAIL", "bruinoutlet@gmail.com");
+let emailPass = await String(readline.question("Enter email app key: "));
+updateEnv("AUTH_PASS", `${emailPass}`);
+let port = await String(readline.question("Enter which port you would like to run the server on (leave empty for 3001): "));
+if (port === '')
+    port = "3001";
+updateEnv("PORT", port);
+let jwtkey = await String(readline.question("Choose a JWT private key: "));
+updateEnv("JWT_KEY", jwtkey);
+console.log("All .env parameters set.");
+} catch (err) { console.log(err); }
 
 function updateEnv(key, value) {
     //read contents of .env
-    fs.readFile('.env', 'utf8', (err, text) => {
-        if (key.trim().length === 0 ){
-            console.error('Empty key.');
-            return;
-        }
-        if (err) {
-            console.error('Error reading .env file:', err);
-            return;
-        };
+    let text;
+    try {
+        text = fs.readFileSync('.env', 'utf8');
+    }
+    catch (err) {
+        console.log("File read failed.");
+        text = '';
+    }
+    if (key.trim().length === 0 ){
+        console.error('Empty key.');
+        return;
+    }
+
     //split env variables into newlines
     const vars = text.split('\n');
     let varExists = false;
@@ -29,12 +46,5 @@ function updateEnv(key, value) {
     if (!varExists)
         vars.push(`${key}=${value}`);
     //update .env with new variables
-    fs.writeFile('.env', vars.join('\n'), 'utf-8', (err => {
-        if (err)
-            console.error('Error updating .env file: ', err);
-        else
-            console.log('.env file successfully set.')
-    }))
-    }
-    )
+    fs.writeFileSync('.env', vars.join('\n'), 'utf-8');
 }

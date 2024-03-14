@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon ./src/index.js",
+    "final": "node ./src/index.js",
     "setenv": "node setenv.js",
+    "startdev": "npm run setenv && npm run dev",
     "start": "npm run setenv && npm run dev"
   },
   "type": "module",
@@ -24,7 +26,8 @@
     "mongoose": "^8.2.1",
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
-    "nodemailer": "^6.9.12"
+    "nodemailer": "^6.9.12",
+    "readline-sync": "^1.4.10"
   },
   "devDependencies": {
     "nodemon": "^3.1.0"
