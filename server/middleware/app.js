@@ -35,7 +35,13 @@ app.use('/products', productRoutes);
 app.use('/orders', orderRoutes);
 app.use('/user', userRoutes);
 
-mongoose.connect(process.env.DB_URI);
+mongoose.connect(process.env.DB_URI).then(result => {
+    console.log("MongoDB connected!");
+}).catch(err=>{
+    console.log("MongoDB conenction failed. Please ensure service is running and API key is correct.");
+    return;
+});
+
 
 //error handling for wrong routes
 app.use((req, res, next) => {
