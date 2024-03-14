@@ -52,6 +52,7 @@ const HeaderBar = () => {
         const confirmLogout = window.confirm("Do you want to log out?");
         if (confirmLogout) {
             logout();
+            window.location.reload();
         }
     };
 

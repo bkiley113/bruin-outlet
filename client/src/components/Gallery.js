@@ -23,8 +23,10 @@ const Gallery = ({itemsarr}) => {
       // New name-based filtering
       const trimmedQuery = searchQuery.trim().toLowerCase();
       if (trimmedQuery) {
+        const regex = new RegExp(`\\b${trimmedQuery}\\b`);
         items = items.filter(item =>
-          item.name.toLowerCase().includes(trimmedQuery)
+          (item.name.toLowerCase().includes(trimmedQuery)) || 
+          regex.test(item.category.toLowerCase().replace("men's clothes", "men clothes"))
         );
       } else {
         setNotFoundFlag(true);
