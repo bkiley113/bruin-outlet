@@ -7,10 +7,7 @@ updateEnv("DB_URI", dbkey);
 updateEnv("AUTH_EMAIL", "bruinoutlet@gmail.com");
 let emailPass = await String(readline.question("Enter email app key: "));
 updateEnv("AUTH_PASS", `${emailPass}`);
-let port = await String(readline.question("Enter which port you would like to run the server on (leave empty for 3001): "));
-if (port === '')
-    port = "3001";
-updateEnv("PORT", port);
+updateEnv("PORT", 3001);
 let jwtkey = await String(readline.question("Choose a JWT private key: "));
 updateEnv("JWT_KEY", jwtkey);
 console.log("All .env parameters set.");
