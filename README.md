@@ -29,6 +29,6 @@ The last field is the JWT key. You can choose any string for this, but the longe
 
 
 
-<h4> Once you submit these values, the web app will build and be ready to use. </br>
+<h4> Once you submit these values, the web app will build and be ready to use. You can access the app at localhost:3000. </br>
 The server will run on port 3001 and the client will run on port 3000. If for some reason you need to change these, this can be done in their respective .env file. </br>
 For any bugs, concerns, or suggestions, please contact bruinoutlet@gmail.com. </h4>
